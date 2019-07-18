@@ -9,5 +9,5 @@ def api_wrapper(*args, **kwargs):
     posts = get_posts_with_more_positive_reactions()
 
     response = {"posts": posts}
-
-    return response
+    import json
+    return json.dumps(response)
