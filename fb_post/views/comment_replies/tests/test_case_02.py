@@ -1,19 +1,12 @@
 """
 # TODO: Update test case description
 """
-from django_swagger_utils.drf_server.utils.server_gen.custom_api_test_case import CustomAPITestCase
+from django_swagger_utils.utils.test import CustomAPITestCase
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 from fb_post.models.models import *
-from django_swagger_utils.drf_server.exceptions import BadRequest
 
 REQUEST_BODY = """
 
-"""
-
-RESPONSE_BODY = """
-{
-    "response": "Invalid comment id", "http_status_code": 400, "res_status": "INVALID_COMMENT_ID"
-}
 """
 
 TEST_CASE = {
@@ -23,20 +16,16 @@ TEST_CASE = {
         "header_params": {},
         "securities": {},
         "body": REQUEST_BODY,
-    },
-    "response": {
-        "status": 400,
-        "body": RESPONSE_BODY,
-        "header_params": {}
     }
 }
 
 
 class TestCase02CommentRepliesAPITestCase(CustomAPITestCase):
-
-    def __init__(self, *args, **kwargs):
-        super(TestCase02CommentRepliesAPITestCase, self).__init__(APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX,
-                                                                  TEST_CASE, *args, **kwargs)
+    app_name = APP_NAME
+    operation_name = OPERATION_NAME
+    request_method = REQUEST_METHOD
+    url_suffix = URL_SUFFIX
+    test_case_dict = TEST_CASE
 
     def setupUser(self, username, password):
         pass
@@ -62,4 +51,4 @@ class TestCase02CommentRepliesAPITestCase(CustomAPITestCase):
         self.setup_data()
         TEST_CASE['request']['path_params']['postid'] = self.post.id
         TEST_CASE['request']['path_params']['commentid'] = self.reply1_comment1.id
-        super(TestCase02CommentRepliesAPITestCase, self).test_case()
+        self.default_test_case()

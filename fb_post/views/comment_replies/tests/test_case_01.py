@@ -1,37 +1,12 @@
 """
 # TODO: Update test case description
 """
-from django_swagger_utils.drf_server.utils.server_gen.custom_api_test_case import CustomAPITestCase
+from django_swagger_utils.utils.test import CustomAPITestCase
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 from fb_post.models.models import *
 
 REQUEST_BODY = """
 
-"""
-
-RESPONSE_BODY = """
-{
-    "replies": [
-        {
-            "comment_id": 1,
-            "commenter": {
-                "userid": 1,
-                "username": "string",
-                "profile_pic": "string"
-            },
-            "comment_message": "string",
-            "comment_create_date": "2099-12-31 00:00:00",
-            "reactions": {
-                "count": 1,
-                "types": [
-                    {
-                        "reaction": "LIKE"
-                    }
-                ]
-            }
-        }
-    ]
-}
 """
 
 TEST_CASE = {
@@ -41,20 +16,16 @@ TEST_CASE = {
         "header_params": {},
         "securities": {},
         "body": REQUEST_BODY,
-    },
-    "response": {
-        "status": 200,
-        "body": RESPONSE_BODY,
-        "header_params": {}
     }
 }
 
 
 class TestCase01CommentRepliesAPITestCase(CustomAPITestCase):
-
-    def __init__(self, *args, **kwargs):
-        super(TestCase01CommentRepliesAPITestCase, self).__init__(APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX,
-                                                                  TEST_CASE, *args, **kwargs)
+    app_name = APP_NAME
+    operation_name = OPERATION_NAME
+    request_method = REQUEST_METHOD
+    url_suffix = URL_SUFFIX
+    test_case_dict = TEST_CASE
 
     def setupUser(self, username, password):
         pass
@@ -80,15 +51,13 @@ class TestCase01CommentRepliesAPITestCase(CustomAPITestCase):
         self.setup_data()
         TEST_CASE['request']['path_params']['postid'] = self.post.id
         TEST_CASE['request']['path_params']['commentid'] = self.comment1.id
-        super(TestCase01CommentRepliesAPITestCase, self).test_case()
+        self.default_test_case()
 
-    def compareResponse(self, response, test_case_response_dict):
+    def _assert_snapshots(self, response):
         import json
         response_data = json.loads(response.content)
         replies = response_data['replies']
 
-        assert len(replies) == 2
-        assert replies[0]['comment_id'] == 3
-        assert replies[1]['comment_id'] == 4
-        assert response.status_code == 200
-
+        self.assert_match_snapshot(len(replies), 'reply_count')
+        self.assert_match_snapshot(replies[0]['comment_id'], 'reply_1_id')
+        self.assert_match_snapshot(replies[1]['comment_id'], 'reply_2_id')
