@@ -2,7 +2,7 @@
 # TODO: Update test case description
 """
 from django_swagger_utils.utils.test import CustomAPITestCase
-
+from freezegun import freeze_time
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 from fb_post.models.models import *
 
@@ -40,6 +40,7 @@ class TestCase01ReplyToCommentAPITestCase(CustomAPITestCase):
         self.post = Post.objects.create(user_id=user_id, post_description="First post")
         self.comment = Comment.objects.create(post_id=self.post.id, user_id=user_id, message="first comment")
 
+    @freeze_time("2012-03-26")
     def test_case(self):
         self.setup_data()
         TEST_CASE['request']['path_params']['postid'] = self.post.id
@@ -57,3 +58,4 @@ class TestCase01ReplyToCommentAPITestCase(CustomAPITestCase):
         self.assert_match_snapshot(reply.commented_on_id.id, 'comment_id')
         self.assert_match_snapshot(reply.user.id, 'reply_user')
         self.assert_match_snapshot(reply.post.id, 'reply_post')
+        self.assert_match_snapshot(reply.comment_create_date, 'reply_date')
