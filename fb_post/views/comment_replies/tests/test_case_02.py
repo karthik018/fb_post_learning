@@ -4,6 +4,7 @@
 from django_swagger_utils.utils.test import CustomAPITestCase
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 from fb_post.models.models import *
+from freezegun import freeze_time
 
 REQUEST_BODY = """
 
@@ -47,6 +48,7 @@ class TestCase02CommentRepliesAPITestCase(CustomAPITestCase):
                                                       commented_on_id=self.comment2,
                                                       message="second reply to second comment")
 
+    @freeze_time("2012-03-26")
     def test_case(self):
         self.setup_data()
         TEST_CASE['request']['path_params']['postid'] = self.post.id
