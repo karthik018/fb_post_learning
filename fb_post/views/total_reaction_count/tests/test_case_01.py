@@ -11,7 +11,7 @@ REQUEST_BODY = """
 
 RESPONSE_BODY = """
 {
-    "total_count": 1
+    "total_count": 4
 }
 """
 
@@ -54,11 +54,5 @@ class TestCase01TotalReactionCountAPITestCase(CustomAPITestCase):
         super(TestCase01TotalReactionCountAPITestCase, self).test_case()
 
     def compareResponse(self, response, test_case_response_dict):
-        import json
-        response_data = json.loads(response.content)
-
-        expected_count = PostReaction.objects.count()
-        total_count = response_data['total_count']
-
-        assert total_count == expected_count
+        super(TestCase01TotalReactionCountAPITestCase, self).compareResponse(response, test_case_response_dict)
         assert response.status_code == 200

@@ -11,12 +11,7 @@ REQUEST_BODY = """
 
 RESPONSE_BODY = """
 {
-    "reactions": [
-        {
-            "count": 1,
-            "reaction": "LIKE"
-        }
-    ]
+    "reactions": []
 }
 """
 
@@ -64,9 +59,3 @@ class TestCase02ReactionMetricsAPITestCase(CustomAPITestCase):
         TEST_CASE['request']['path_params']['postid'] = self.post3.id
         super(TestCase02ReactionMetricsAPITestCase, self).test_case()
 
-    def compareResponse(self, response, test_case_response_dict):
-        import json
-        response_data = json.loads(response.content)
-        reactions = response_data['reactions']
-
-        assert len(reactions) == 0

@@ -14,8 +14,14 @@ RESPONSE_BODY = """
     "reactions": [
         {
             "userid": 1,
-            "username": "string",
-            "profile_pic": "string",
+            "username": "user1",
+            "profile_pic": "",
+            "reaction": "LIKE"
+        },
+        {
+            "userid": 3,
+            "username": "user3",
+            "profile_pic": "",
             "reaction": "LIKE"
         }
     ]
@@ -66,11 +72,12 @@ class TestCase01ReactionsToPostAPITestCase(CustomAPITestCase):
         super(TestCase01ReactionsToPostAPITestCase, self).test_case()
 
     def compareResponse(self, response, test_case_response_dict):
-        import json
-        response_data = json.loads(response.content)
-        post_reactions = response_data['reactions']
-
-        assert len(post_reactions) == 2
-        assert post_reactions[0]['userid'] == self.foo_user.id
-        assert post_reactions[1]['userid'] == self.foo_bar_user.id
+        # import json
+        # response_data = json.loads(response.content)
+        # post_reactions = response_data['reactions']
+        #
+        # assert len(post_reactions) == 2
+        # assert post_reactions[0]['userid'] == self.foo_user.id
+        # assert post_reactions[1]['userid'] == self.foo_bar_user.id
+        super(TestCase01ReactionsToPostAPITestCase, self).compareResponse(response, test_case_response_dict)
         assert response.status_code == 200

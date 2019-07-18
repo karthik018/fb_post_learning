@@ -14,6 +14,10 @@ RESPONSE_BODY = """
     "reactions": [
         {
             "count": 1,
+            "reaction": "HAHA"
+        },
+        {
+            "count": 2,
             "reaction": "LIKE"
         }
     ]
@@ -65,12 +69,5 @@ class TestCase01ReactionMetricsAPITestCase(CustomAPITestCase):
         super(TestCase01ReactionMetricsAPITestCase, self).test_case()
 
     def compareResponse(self, response, test_case_response_dict):
-        import json
-        response_data = json.loads(response.content)
-        reactions = response_data['reactions']
-
-        assert reactions[0]['reaction'] == "HAHA"
-        assert reactions[0]['count'] == 1
-        assert reactions[1]['reaction'] == "LIKE"
-        assert reactions[1]['count'] == 2
+        super(TestCase01ReactionMetricsAPITestCase, self).compareResponse(response, test_case_response_dict)
         assert response.status_code == 200

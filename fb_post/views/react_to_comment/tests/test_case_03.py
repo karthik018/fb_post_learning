@@ -14,7 +14,7 @@ REQUEST_BODY = """
 
 RESPONSE_BODY = """
 {
-    "reactionid": 1
+    "reactionid": null
 }
 """
 
@@ -56,6 +56,7 @@ class TestCase03ReactToCommentAPITestCase(CustomAPITestCase):
         super(TestCase03ReactToCommentAPITestCase, self).test_case()
 
     def compareResponse(self, response, test_case_response_dict):
+        super(TestCase03ReactToCommentAPITestCase, self).compareResponse(response, test_case_response_dict)
         with self.assertRaises(ObjectDoesNotExist):
             CommentReaction.objects.get(user_id=self.foo_user.id, comment_id=self.comment.id)
 

@@ -14,7 +14,7 @@ REQUEST_BODY = """
 
 RESPONSE_BODY = """
 {
-    "reactionid": 1
+    "reactionid": null
 }
 """
 
@@ -55,6 +55,7 @@ class TestCase03ReactToPostAPITestCase(CustomAPITestCase):
         super(TestCase03ReactToPostAPITestCase, self).test_case()
 
     def compareResponse(self, response, test_case_response_dict):
+        super(TestCase03ReactToPostAPITestCase, self).compareResponse(response, test_case_response_dict)
         with self.assertRaises(ObjectDoesNotExist):
             PostReaction.objects.get(user_id=self.foo_user.id, post_id=self.post.id)
 
