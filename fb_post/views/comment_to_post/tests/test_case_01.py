@@ -45,3 +45,14 @@ class TestCase01CommentToPostAPITestCase(CustomAPITestCase):
         TEST_CASE['request']['path_params']['postid'] = self.post.id
         self.count_before = Comment.objects.filter(post_id=self.post.id).count()
         self.default_test_case()
+
+    def _assert_snapshots(self, response):
+        super(TestCase01CommentToPostAPITestCase, self)._assert_snapshots(response)
+        import json
+        response_data = json.loads(response.content)
+        comment_id = response_data['commentid']
+        comment = Comment.objects.get(id=comment_id)
+
+        self.assert_match_snapshot(comment.post.id, 'comment_post')
+        self.assert_match_snapshot(comment.user.id, 'comment_user')
+        self.assert_match_snapshot(comment.message, 'comment_content')
