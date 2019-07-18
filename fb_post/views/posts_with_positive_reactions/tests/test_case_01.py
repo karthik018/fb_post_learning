@@ -14,6 +14,9 @@ RESPONSE_BODY = """
     "posts": [
         {
             "postid": 1
+        },
+        {
+            "postid": 2
         }
     ]
 }
@@ -65,16 +68,6 @@ class TestCase01PostsWithPositiveReactionsAPITestCase(CustomAPITestCase):
         super(TestCase01PostsWithPositiveReactionsAPITestCase, self).test_case()
 
     def compareResponse(self, response, test_case_response_dict):
-        import json
-        response_data = json.loads(response.content)
-
-        positive_posts = response_data['posts']
-
-        positive_posts_ids = [positive_posts[i]['postid'] for i in range(0, len(positive_posts))]
-
-        assert len(positive_posts) == 2
-        assert positive_posts[0]['postid'] == 1
-        assert positive_posts[1]['postid'] == 2
+        super(TestCase01PostsWithPositiveReactionsAPITestCase, self).compareResponse(response, test_case_response_dict)
         assert response.status_code == 200
 
-        assert self.post3.id not in positive_posts_ids
