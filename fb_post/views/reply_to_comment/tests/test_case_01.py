@@ -46,3 +46,19 @@ class TestCase01ReplyToCommentAPITestCase(CustomAPITestCase):
         TEST_CASE['request']['path_params']['commentid'] = self.comment.id
         self.count_before = Comment.objects.filter(commented_on_id=self.comment.id).count()
         self.default_test_case()
+
+    # def compareResponse(self, response, test_case_response_dict):
+    #     count_after = Comment.objects.filter(commented_on_id=self.comment.id).count()
+    #     import json
+    #     response_date = json.loads(response.content)
+    #     reply_id = response_date['replyid']
+    #     reply = Comment.objects.get(id=reply_id)
+    #
+    #     assert count_after == self.count_before + 1
+    #     assert reply_id == 2
+    #     assert reply.commented_on_id.id == self.comment.id
+    #     assert reply.user.id == self.foo_user.id
+    #     assert reply.post.id == self.post.id
+
+
+
