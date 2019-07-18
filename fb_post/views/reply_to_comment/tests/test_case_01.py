@@ -47,18 +47,13 @@ class TestCase01ReplyToCommentAPITestCase(CustomAPITestCase):
         self.count_before = Comment.objects.filter(commented_on_id=self.comment.id).count()
         self.default_test_case()
 
-    # def compareResponse(self, response, test_case_response_dict):
-    #     count_after = Comment.objects.filter(commented_on_id=self.comment.id).count()
-    #     import json
-    #     response_date = json.loads(response.content)
-    #     reply_id = response_date['replyid']
-    #     reply = Comment.objects.get(id=reply_id)
-    #
-    #     assert count_after == self.count_before + 1
-    #     assert reply_id == 2
-    #     assert reply.commented_on_id.id == self.comment.id
-    #     assert reply.user.id == self.foo_user.id
-    #     assert reply.post.id == self.post.id
+    def _assert_snapshots(self, response):
+        super(TestCase01ReplyToCommentAPITestCase, self)._assert_snapshots(response)
+        import json
+        response_data = json.loads(response.content)
+        reply_id = response_data['replyid']
+        reply = Comment.objects.get(id=reply_id)
 
-
-
+        self.assert_match_snapshot(reply.commented_on_id.id, 'comment_id')
+        self.assert_match_snapshot(reply.user.id, 'reply_user')
+        self.assert_match_snapshot(reply.post.id, 'reply_post')

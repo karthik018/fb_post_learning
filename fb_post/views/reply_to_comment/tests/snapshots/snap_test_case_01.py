@@ -35,3 +35,9 @@ snapshots['TestCase01ReplyToCommentAPITestCase::test_case header_params'] = {
         'X-Frame-Options'
     ]
 }
+
+snapshots['TestCase01ReplyToCommentAPITestCase::test_case comment_id'] = 1
+
+snapshots['TestCase01ReplyToCommentAPITestCase::test_case reply_user'] = 1
+
+snapshots['TestCase01ReplyToCommentAPITestCase::test_case reply_post'] = 1
