@@ -11,5 +11,5 @@ def api_wrapper(*args, **kwargs):
     reaction_metrics = get_reaction_metrics(post_id=post_id)
 
     response = {"reactions": reaction_metrics}
-
-    return response
+    import json
+    return json.dumps(response)
