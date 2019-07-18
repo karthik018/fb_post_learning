@@ -11,7 +11,6 @@ def api_wrapper(*args, **kwargs):
 
     try:
         delete_post(post_id=post_id)
-
         from django.http.response import HttpResponse
         return HttpResponse(status=200)
     except ObjectDoesNotExist:
