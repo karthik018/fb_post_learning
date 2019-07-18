@@ -35,3 +35,7 @@ snapshots['TestCase01CreatePostAPITestCase::test_case header_params'] = {
         'X-Frame-Options'
     ]
 }
+
+snapshots['TestCase01CreatePostAPITestCase::test_case post_user'] = 1
+
+snapshots['TestCase01CreatePostAPITestCase::test_case post_content'] = 'Test_Post_content'
