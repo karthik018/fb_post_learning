@@ -1,79 +1,14 @@
 """
 # TODO: Update test case description
 """
-from django_swagger_utils.drf_server.utils.server_gen.custom_api_test_case import CustomAPITestCase
+from django_swagger_utils.utils.test import CustomAPITestCase
+from freezegun import freeze_time
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 from fb_post.models.models import *
 
+
 REQUEST_BODY = """
 
-"""
-
-RESPONSE_BODY = """
-{
-    "posts": [
-        {
-            "postid": 1,
-            "posted_by": {
-                "userid": 1,
-                "username": "string",
-                "profile_pic": "string"
-            },
-            "post_content": "string",
-            "post_create_date": "2099-12-31 00:00:00",
-            "reactions": {
-                "count": 1,
-                "types": [
-                    {
-                        "reaction": "LIKE"
-                    }
-                ]
-            },
-            "comment_count": 1,
-            "comments": [
-                {
-                    "comment_id": 1,
-                    "commenter": {
-                        "userid": 1,
-                        "username": "string",
-                        "profile_pic": "string"
-                    },
-                    "comment_message": "string",
-                    "comment_create_date": "2099-12-31 00:00:00",
-                    "reactions": {
-                        "count": 1,
-                        "types": [
-                            {
-                                "reaction": "LIKE"
-                            }
-                        ]
-                    },
-                    "replies_count": 1,
-                    "replies": [
-                        {
-                            "comment_id": 1,
-                            "commenter": {
-                                "userid": 1,
-                                "username": "string",
-                                "profile_pic": "string"
-                            },
-                            "comment_message": "string",
-                            "comment_create_date": "2099-12-31 00:00:00",
-                            "reactions": {
-                                "count": 1,
-                                "types": [
-                                    {
-                                        "reaction": "LIKE"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-}
 """
 
 TEST_CASE = {
@@ -83,19 +18,16 @@ TEST_CASE = {
         "header_params": {},
         "securities": {},
         "body": REQUEST_BODY,
-    },
-    "response": {
-        "status": 200,
-        "body": RESPONSE_BODY,
-        "header_params": {}
     }
 }
 
 
 class TestCase01PostsReactedByUserAPITestCase(CustomAPITestCase):
-
-    def __init__(self, *args, **kwargs):
-        super(TestCase01PostsReactedByUserAPITestCase, self).__init__(APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX, TEST_CASE, *args, **kwargs)
+    app_name = APP_NAME
+    operation_name = OPERATION_NAME
+    request_method = REQUEST_METHOD
+    url_suffix = URL_SUFFIX
+    test_case_dict = TEST_CASE
 
     def setupUser(self, username, password):
         pass
@@ -117,18 +49,8 @@ class TestCase01PostsReactedByUserAPITestCase(CustomAPITestCase):
         self.react2_post3 = PostReaction.objects.create(post_id=self.post3.id, user_id=self.foo_user.id, reaction="ANGRY")
         self.react3_post3 = PostReaction.objects.create(post_id=self.post3.id, user_id=self.bar_user.id, reaction="WOW")
 
+    @freeze_time("2012-03-26")
     def test_case(self):
         self.setup_data()
         TEST_CASE['request']['path_params']['username'] = self.foo_user.id
-        super(TestCase01PostsReactedByUserAPITestCase, self).test_case()
-
-    def compareResponse(self, response, test_case_response_dict):
-        import json
-        response_data = json.loads(response.content)
-        user_reacted_posts = response_data['posts']
-        post_ids = [user_reacted_posts[i]['postid'] for i in range(len(user_reacted_posts))]
-        assert len(user_reacted_posts) == 3
-        assert self.post1.id in post_ids
-        assert self.post2.id in post_ids
-        assert self.post3.id in post_ids
-        assert response.status_code == 200
+        self.default_test_case()
