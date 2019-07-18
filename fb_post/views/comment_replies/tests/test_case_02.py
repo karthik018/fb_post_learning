@@ -4,6 +4,7 @@
 from django_swagger_utils.drf_server.utils.server_gen.custom_api_test_case import CustomAPITestCase
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 from fb_post.models.models import *
+from django_swagger_utils.drf_server.exceptions import BadRequest
 
 REQUEST_BODY = """
 
@@ -11,26 +12,7 @@ REQUEST_BODY = """
 
 RESPONSE_BODY = """
 {
-    "replies": [
-        {
-            "comment_id": 1,
-            "commenter": {
-                "userid": 1,
-                "username": "string",
-                "profile_pic": "string"
-            },
-            "comment_message": "string",
-            "comment_create_date": "2099-12-31 00:00:00",
-            "reactions": {
-                "count": 1,
-                "types": [
-                    {
-                        "reaction": "LIKE"
-                    }
-                ]
-            }
-        }
-    ]
+    "response": "Invalid comment id", "http_status_code": 400, "res_status": "INVALID_COMMENT_ID"
 }
 """
 
@@ -43,17 +25,17 @@ TEST_CASE = {
         "body": REQUEST_BODY,
     },
     "response": {
-        "status": 200,
+        "status": 400,
         "body": RESPONSE_BODY,
         "header_params": {}
     }
 }
 
 
-class TestCase01CommentRepliesAPITestCase(CustomAPITestCase):
+class TestCase02CommentRepliesAPITestCase(CustomAPITestCase):
 
     def __init__(self, *args, **kwargs):
-        super(TestCase01CommentRepliesAPITestCase, self).__init__(APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX,
+        super(TestCase02CommentRepliesAPITestCase, self).__init__(APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX,
                                                                   TEST_CASE, *args, **kwargs)
 
     def setupUser(self, username, password):
@@ -79,16 +61,5 @@ class TestCase01CommentRepliesAPITestCase(CustomAPITestCase):
     def test_case(self):
         self.setup_data()
         TEST_CASE['request']['path_params']['postid'] = self.post.id
-        TEST_CASE['request']['path_params']['commentid'] = self.comment1.id
-        super(TestCase01CommentRepliesAPITestCase, self).test_case()
-
-    def compareResponse(self, response, test_case_response_dict):
-        import json
-        response_data = json.loads(response.content)
-        replies = response_data['replies']
-
-        assert len(replies) == 2
-        assert replies[0]['comment_id'] == 3
-        assert replies[1]['comment_id'] == 4
-        assert response.status_code == 200
-
+        TEST_CASE['request']['path_params']['commentid'] = self.reply1_comment1.id
+        super(TestCase02CommentRepliesAPITestCase, self).test_case()
