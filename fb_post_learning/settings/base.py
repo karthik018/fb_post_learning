@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development conf - unsuitable for production
@@ -88,6 +90,7 @@ LOGGING = {
         'path_info': {
             '()': 'ib_common.logger.log_filters.PathInfoFilter'
         },
+
         'aws_request_id': {
             '()': 'ib_common.logger.log_filters.AWSRequestIdFilter'
         },
