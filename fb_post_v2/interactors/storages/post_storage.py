@@ -61,6 +61,7 @@ class GetPostDTO:
     reactions: ReactionsDTO
     comments: List[CommentDTO]
     comment_reactions: List[ReactionsDTO]
+    user_details = List[UserDTO]
 
 @dataclass
 class UserPosts:
