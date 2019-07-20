@@ -210,7 +210,7 @@
         "types": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Reaction"
+            "type": "string"
           }
         }
       }

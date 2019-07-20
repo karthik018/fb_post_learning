@@ -35,7 +35,7 @@ class PostReaction(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    commented_on_id = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
+    commented_on = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
     comment_create_date = models.DateTimeField(auto_now=t.now())
     message = models.CharField(max_length=300)
 
