@@ -17,9 +17,9 @@ class TestPostsWithPositiveReactions(unittest.TestCase):
         get_posts_with_more_positive_reactions = GetPostsWithPositiveReactionsInteractor(post_storage_mock,
                                                                                          presenter_mock)
 
-        response_data = [{"post_id": 1},
+        response_data = {"posts": [{"post_id": 1},
                          {"post_id": 2},
-                         {"post_id": 3}]
+                         {"post_id": 3}]}
 
         post_storage_mock.get_posts_with_more_positive_reactions.return_value = [post1_dto, post2_dto,
                                                                                  post3_dto]

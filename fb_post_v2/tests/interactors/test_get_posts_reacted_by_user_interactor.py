@@ -15,8 +15,8 @@ class TestGetPostsReactedByUser(unittest.TestCase):
         get_posts_reacted = GetPostsReactedByUserInteractor(post_storage_mock, presenter_mock)
 
         user_id = 1
-        response_data = [{"post_id": 1},
-                         {"post_id": 2}]
+        response_data = {"posts": [{"post_id": 1},
+                         {"post_id": 2}]}
 
         post_storage_mock.get_posts_reacted_by_user.return_value = userposts_dto
         presenter_mock.get_posts_reacted_by_user.return_value = response_data
