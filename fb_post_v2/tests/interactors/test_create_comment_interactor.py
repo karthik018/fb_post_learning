@@ -15,17 +15,22 @@ class TestReplyToComment(unittest.TestCase):
         presenter_mock = Mock(spec=JsonPresenter)
         create_comment = CreateCommentInteractor(post_storage_mock, presenter_mock)
 
-        post_storage_mock.check_comment_or_reply.return_value = False
+        comment_id = 2
+        commenter = 1
+        comment_content = "test comment"
+        response_data = {"comment_id": 3}
         comment_dto.id = 1
+
+        post_storage_mock.check_comment_or_reply.return_value = False
         post_storage_mock.get_comment.return_value = comment_dto
         post_storage_mock.create_reply.return_value = comment_id_dto
-        presenter_mock.create_reply.return_value = {"comment_id": 3}
-        response = create_comment.create_reply(2, 1, "comment")
+        presenter_mock.create_reply.return_value = response_data
+        response = create_comment.create_reply(comment_id, commenter, comment_content)
 
-        post_storage_mock.get_comment.assert_called_once_with(2)
-        post_storage_mock.create_reply.assert_called_once_with(1, 1, "comment")
+        post_storage_mock.get_comment.assert_called_once_with(comment_id)
+        post_storage_mock.create_reply.assert_called_once_with(comment_dto.id, commenter, comment_content)
         presenter_mock.create_reply.assert_called_once_with(comment_id_dto)
-        assert response == {"comment_id": 3}
+        assert response == response_data
 
     def test_comment_reply(self):
         comment_id_dto = Mock(spec=[field.name for field in fields(CommentIdDTO)])
@@ -33,14 +38,19 @@ class TestReplyToComment(unittest.TestCase):
         presenter_mock = Mock(spec=JsonPresenter)
         create_comment = CreateCommentInteractor(post_storage_mock, presenter_mock)
 
+        comment_id = 1
+        commenter = 1
+        comment_content = "test comment"
+        response_data = {"comment_id": 2}
+
         post_storage_mock.check_comment_or_reply.return_value = True
         post_storage_mock.create_reply.return_value = comment_id_dto
-        presenter_mock.create_reply.return_value = {"comment_id": 2}
-        response = create_comment.create_reply(1, 1, "comment")
+        presenter_mock.create_reply.return_value = response_data
+        response = create_comment.create_reply(comment_id, commenter, comment_content)
 
-        post_storage_mock.create_reply.assert_called_once_with(1, 1, "comment")
+        post_storage_mock.create_reply.assert_called_once_with(comment_id, commenter, comment_content)
         presenter_mock.create_reply.assert_called_once_with(comment_id_dto)
-        assert response == {"comment_id": 2}
+        assert response == response_data
 
 class TestCreateComment(unittest.TestCase):
     def test_create_comment(self):
@@ -49,10 +59,15 @@ class TestCreateComment(unittest.TestCase):
         presenter_mock = Mock(spec=JsonPresenter)
         create_comment = CreateCommentInteractor(post_storage_mock, presenter_mock)
 
-        post_storage_mock.create_comment.return_value = comment_id_dto
-        presenter_mock.create_comment.return_value = {"comment_id": 1}
-        response = create_comment.create_comment(1, 1, "comment")
+        post_id = 1
+        commenter = 1
+        comment_content = "test comment"
+        response_data = {"comment_id": 1}
 
-        post_storage_mock.create_comment.assert_called_once_with(1, 1, "comment")
+        post_storage_mock.create_comment.return_value = comment_id_dto
+        presenter_mock.create_comment.return_value = response_data
+        response = create_comment.create_comment(post_id, commenter, comment_content)
+
+        post_storage_mock.create_comment.assert_called_once_with(post_id, commenter, comment_content)
         presenter_mock.create_comment.assert_called_once_with(comment_id_dto)
-        assert response == {"comment_id": 1}
+        assert response == response_data
