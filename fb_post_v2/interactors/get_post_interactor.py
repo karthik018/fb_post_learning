@@ -9,6 +9,6 @@ class GetPostInteractor:
         self.presenter = presenter
 
     def get_post(self, post_id: int) -> dict:
-        get_post_dto = self.post_storage.get_post(post_id=post_id)
+        get_post_dto = self.post_storage.get_post(post_id)
         response = self.presenter.get_post(get_post_dto)
         return response
