@@ -37,12 +37,11 @@ class TestCommentReplies(unittest.TestCase):
         get_comment_replies = CommentRepliesInteractor(post_storage_mock, presenter_mock)
 
         comment_id = 2
-        response_data = {"response": "BadRequest"}
 
         post_storage_mock.check_comment_or_reply.return_value = False
-        presenter_mock.raise_not_comment.return_value = response_data
-        response = get_comment_replies.get_comment_replies(comment_id)
+        presenter_mock.raise_not_comment.side_effect = SuspiciousOperation
+        with self.assertRaises(SuspiciousOperation):
+            response = get_comment_replies.get_comment_replies(comment_id)
 
         post_storage_mock.check_comment_or_reply.assert_called_once_with(comment_id)
         presenter_mock.raise_not_comment.assert_called_once()
-        assert response_data == response

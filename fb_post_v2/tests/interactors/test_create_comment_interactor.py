@@ -8,7 +8,7 @@ from fb_post_v2.interactors.storages.post_storage import PostStorage, CommentDTO
 
 
 class TestReplyToComment(unittest.TestCase):
-    def test_comment_or_reply(self):
+    def test_reply_to_reply(self):
         comment_dto = Mock(spec=[field.name for field in fields(CommentDTO)])
         comment_id_dto = Mock(spec=[field.name for field in fields(CommentIdDTO)])
         post_storage_mock = Mock(spec=PostStorage)
@@ -32,7 +32,7 @@ class TestReplyToComment(unittest.TestCase):
         presenter_mock.create_reply.assert_called_once_with(comment_id_dto)
         assert response == response_data
 
-    def test_comment_reply(self):
+    def test_reply_to_comment(self):
         comment_id_dto = Mock(spec=[field.name for field in fields(CommentIdDTO)])
         post_storage_mock = Mock(spec=PostStorage)
         presenter_mock = Mock(spec=JsonPresenter)

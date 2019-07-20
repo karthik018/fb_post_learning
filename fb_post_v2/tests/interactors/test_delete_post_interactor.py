@@ -4,6 +4,7 @@ import unittest
 from fb_post_v2.interactors.delete_post_interactor import DeletePostInteractor
 from fb_post_v2.interactors.storages.post_storage import PostStorage
 from fb_post_v2.interactors.presenters.json_presenter import JsonPresenter
+from django.core.exceptions import ObjectDoesNotExist
 
 class TestDeletePos(unittest.TestCase):
     def test_delete_post(self):
@@ -29,13 +30,13 @@ class TestDeletePos(unittest.TestCase):
         delete_post = DeletePostInteractor(post_storage_mock, presenter_mock)
 
         post_id = 2
-        response_data = {"response": "post does not exists"}
 
         post_storage_mock.post_exists.return_value = False
-        presenter_mock.post_not_exists.return_value = response_data
-        response = delete_post.delete_post(post_id)
+        presenter_mock.post_not_exists.side_effect = ObjectDoesNotExist
+        with self.assertRaises(ObjectDoesNotExist):
+            response = delete_post.delete_post(post_id)
 
         post_storage_mock.post_exists.assert_called_once_with(post_id)
         presenter_mock.post_not_exists.assert_called_once()
-        assert response == response_data
+
 

@@ -20,6 +20,7 @@ class TestGetPostsReactedByUser(unittest.TestCase):
 
         post_storage_mock.get_posts_reacted_by_user.return_value = userposts_dto
         presenter_mock.get_posts_reacted_by_user.return_value = response_data
+
         response = get_posts_reacted.get_posts_reacted_by_user(user_id)
 
         post_storage_mock.get_posts_reacted_by_user.assert_called_once_with(user_id)
