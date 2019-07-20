@@ -14,4 +14,4 @@ class CommentRepliesInteractor:
             replies_dto = self.post_storage.get_comment_replies(comment_id)
             response = self.presenter.get_comment_replies(replies_dto)
             return response
-        self.presenter.raise_not_comment()
+        return self.presenter.raise_not_comment()
