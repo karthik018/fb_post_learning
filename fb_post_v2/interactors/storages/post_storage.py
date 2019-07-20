@@ -117,7 +117,7 @@ class PostStorage:
         pass
 
     @abc.abstractmethod
-    def get_reactions_to_post(self, post_id: int) -> ReactionDetailsDTO:
+    def get_reactions_to_post(self, post_id: int) -> List[ReactionDetailsDTO]:
         pass
 
     @abc.abstractmethod
