@@ -19,15 +19,17 @@ class TestCommentReplies(unittest.TestCase):
         get_comment_replies = CommentRepliesInteractor(post_storage_mock, presenter_mock)
 
         comment_id = 1
+        offset = 0
+        limit = 1
         response_data = {"replies": [{"reply": 2}, {"reply": 4}]}
 
         post_storage_mock.check_comment_or_reply.return_value = True
         post_storage_mock.get_comment_replies.return_value = replies_dto
         presenter_mock.get_comment_replies.return_value = response_data
-        response = get_comment_replies.get_comment_replies(comment_id)
+        response = get_comment_replies.get_comment_replies(comment_id, offset, limit)
 
         post_storage_mock.check_comment_or_reply.assert_called_once_with(comment_id)
-        post_storage_mock.get_comment_replies.assert_called_once_with(comment_id)
+        post_storage_mock.get_comment_replies.assert_called_once_with(comment_id, offset, limit)
         presenter_mock.get_comment_replies.assert_called_once_with(replies_dto)
         assert response == response_data
 
@@ -37,11 +39,13 @@ class TestCommentReplies(unittest.TestCase):
         get_comment_replies = CommentRepliesInteractor(post_storage_mock, presenter_mock)
 
         comment_id = 2
+        offset = 0
+        limit = 1
 
         post_storage_mock.check_comment_or_reply.return_value = False
         presenter_mock.raise_not_comment.side_effect = SuspiciousOperation
         with self.assertRaises(SuspiciousOperation):
-            response = get_comment_replies.get_comment_replies(comment_id)
+            response = get_comment_replies.get_comment_replies(comment_id, offset, limit)
 
         post_storage_mock.check_comment_or_reply.assert_called_once_with(comment_id)
         presenter_mock.raise_not_comment.assert_called_once()

@@ -16,8 +16,8 @@ class CreateCommentInteractor:
     def create_reply(self, comment_id: int, commenter: int, comment_content: str) -> dict:
         comment = self.post_storage.check_comment_or_reply(comment_id)
         if not comment:
-            comment_id_dto = self.post_storage.get_comment_id(comment_id)
-            comment_id = comment_id_dto.comment_id
+            comment_id_dto_ = self.post_storage.get_comment_id(comment_id)
+            comment_id = comment_id_dto_.comment_id
         reply_dto = self.post_storage.create_reply(comment_id, commenter, comment_content)
         response = self.presenter.create_reply(reply_dto)
         return response

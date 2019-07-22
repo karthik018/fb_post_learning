@@ -4,14 +4,14 @@ from dataclasses import fields
 
 from fb_post_v2.interactors.get_reaction_metrics_interactor import GetReactionMetricsInteractor
 from fb_post_v2.interactors.presenters.json_presenter import JsonPresenter
-from fb_post_v2.interactors.storages.post_storage import ReactionMetricsDTO, PostStorage
+from fb_post_v2.interactors.storages.post_storage import PostStorage, ReactionCountDTO
 
 
 class TestReactionMetrics(unittest.TestCase):
     def test_reaction_metrics(self):
-        reaction1_metrics_dto = Mock(spec=[field.name for field in fields(ReactionMetricsDTO)])
-        reaction2_metrics_dto = Mock(spec=[field.name for field in fields(ReactionMetricsDTO)])
-        reaction3_metrics_dto = Mock(spec=[field.name for field in fields(ReactionMetricsDTO)])
+        reaction1_metrics_dto = Mock(spec=[field.name for field in fields(ReactionCountDTO)])
+        reaction2_metrics_dto = Mock(spec=[field.name for field in fields(ReactionCountDTO)])
+        reaction3_metrics_dto = Mock(spec=[field.name for field in fields(ReactionCountDTO)])
         post_storage_mock = Mock(spec=PostStorage)
         presenter_mock = Mock(spec=JsonPresenter)
         reaction_metrics = GetReactionMetricsInteractor(post_storage_mock, presenter_mock)

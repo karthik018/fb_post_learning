@@ -18,12 +18,14 @@ class TestPostReactions(unittest.TestCase):
         get_reactions_to_post = GetReactionsToPostInteractor(post_storage_mock, presenter_mock)
 
         post_id = 1
+        offset = 0
+        limit = 1
         response_data = {"reactions": [{"reaction": "LIKE"}, {"reaction": "LOVE"}]}
 
         post_storage_mock.get_reactions_to_post.return_value = reactions_dto
         presenter_mock.get_reactions_to_post.return_value = response_data
-        response = get_reactions_to_post.get_reactions_to_post(post_id)
+        response = get_reactions_to_post.get_reactions_to_post(post_id, offset, limit)
 
-        post_storage_mock.get_reactions_to_post.assert_called_once_with(post_id)
+        post_storage_mock.get_reactions_to_post.assert_called_once_with(post_id, offset, limit)
         presenter_mock.get_reactions_to_post.assert_called_once_with(reactions_dto)
         assert response == response_data

@@ -19,16 +19,16 @@ class TestReplyToComment(unittest.TestCase):
         commenter = 1
         comment_content = "test comment"
         response_data = {"comment_id": 3}
-        comment_dto.id = 1
+        comment_id_dto.comment_id = 1
 
         post_storage_mock.check_comment_or_reply.return_value = False
-        post_storage_mock.get_comment.return_value = comment_dto
+        post_storage_mock.get_comment_id.return_value = comment_id_dto
         post_storage_mock.create_reply.return_value = comment_id_dto
         presenter_mock.create_reply.return_value = response_data
         response = create_comment.create_reply(comment_id, commenter, comment_content)
 
-        post_storage_mock.get_comment.assert_called_once_with(comment_id)
-        post_storage_mock.create_reply.assert_called_once_with(comment_dto.id, commenter, comment_content)
+        post_storage_mock.get_comment_id.assert_called_once_with(comment_id)
+        post_storage_mock.create_reply.assert_called_once_with(comment_id_dto.comment_id, commenter, comment_content)
         presenter_mock.create_reply.assert_called_once_with(comment_id_dto)
         assert response == response_data
 
