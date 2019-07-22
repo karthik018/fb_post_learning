@@ -21,7 +21,7 @@ PRINT_REQUEST_RESPONSE_TO_CONSOLE = True
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 import uuid
 
-AUTH_USER_MODEL = 'fb_post.User'
+AUTH_USER_MODEL = 'fb_post_v2.User'
 
 DATABASES = {
     'default': {

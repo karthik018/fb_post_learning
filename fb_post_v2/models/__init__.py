@@ -1,4 +1,5 @@
-__all__ = []
+from .models import *
+__all__ = ['Post', 'PostReaction', 'User', 'Comment', 'CommentReaction']
 
 # class DummyModel(AbstractDateTimeModel):
 #     """

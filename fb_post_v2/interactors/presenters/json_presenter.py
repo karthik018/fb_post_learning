@@ -3,7 +3,8 @@ import abc
 from typing import List, Dict
 
 from fb_post_v2.interactors.storages.post_storage import PostDTO, GetPostDTO, CommentDTO, ReactionDTO, \
-    UserPosts, ReactionDetailsDTO, ReactionMetricsDTO, TotalReactionDTO, PostIdDTO, ReactionIdDTO, CommentIdDTO
+    UserPosts, ReactionDetailsDTO, TotalReactionDTO, PostIdDTO, ReactionIdDTO, CommentIdDTO, \
+    RepliesDTO, ReactionCountDTO
 
 
 class JsonPresenter:
@@ -35,7 +36,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_comment_replies(self, replies_dto: List[CommentDTO]):
+    def get_comment_replies(self, replies_dto: List[RepliesDTO]):
         pass
 
     @abc.abstractmethod
@@ -47,7 +48,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_posts_reacted_by_user(self, posts_dto: UserPosts):
+    def get_posts_reacted_by_user(self, posts_dto: List[PostIdDTO]):
         pass
 
     @abc.abstractmethod
@@ -55,7 +56,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_reaction_metrics(self, reactions_dto: List[ReactionMetricsDTO]):
+    def get_reaction_metrics(self, reactions_dto: List[ReactionCountDTO]):
         pass
 
     @abc.abstractmethod
@@ -63,7 +64,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def delete_post(self, post_id: Dict):
+    def delete_post(self, post_id: PostIdDTO):
         pass
 
     @abc.abstractmethod

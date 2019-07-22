@@ -13,7 +13,6 @@ class UserDTO:
 @dataclass
 class PostDTO:
     id: int
-    user_id: int
     post_content: str
     post_create_date: datetime
 
@@ -22,11 +21,9 @@ class PostIdDTO:
     post_id: int
 
 @dataclass
-class CommentDTO:
-    id: int
-    post_id: int
-    user_id: int
-    commented_on_id: Optional[int]
+class RepliesDTO:
+    comment_id: int
+    user: UserDTO
     comment_content: str
     comment_create_date: datetime
 
@@ -37,7 +34,7 @@ class CommentIdDTO:
 @dataclass
 class ReactionDTO:
     id: int
-    post_id: int
+    react_on_id: int
     reacted_by: int
     reaction: str
 
@@ -51,17 +48,29 @@ class ReactionsDTO:
     types: List[str]
 
 @dataclass
+class CommentDTO:
+    id: int
+    user: UserDTO
+    comment_content: str
+    comment_create_date: datetime
+    comment_reactions: ReactionsDTO
+
+@dataclass
+class CommentWithRepliesDTO(CommentDTO):
+    replies_count: int
+    replies: List[CommentDTO]
+
+@dataclass
 class ReactionDetailsDTO(UserDTO):
     reaction: str
-
 
 @dataclass
 class GetPostDTO:
     post: PostDTO
+    posted_by: UserDTO
     reactions: ReactionsDTO
-    comments: List[CommentDTO]
-    comment_reactions: List[ReactionsDTO]
-    user_details = List[UserDTO]
+    comments: List[CommentWithRepliesDTO]
+    comment_count: int
 
 @dataclass
 class UserPosts:
@@ -71,10 +80,6 @@ class UserPosts:
 class ReactionCountDTO:
     count: int
     reaction: str
-
-@dataclass
-class ReactionMetricsDTO:
-    reactions: List[ReactionCountDTO]
 
 @dataclass
 class TotalReactionDTO:
@@ -109,19 +114,19 @@ class PostStorage:
         pass
 
     @abc.abstractmethod
-    def get_comment_replies(self, comment_id: int) -> List[CommentDTO]:
+    def get_comment_replies(self, comment_id: int, offset: int, limit: int) -> List[RepliesDTO]:
         pass
 
     @abc.abstractmethod
-    def get_user_posts(self, user_id: int) -> UserPosts:
+    def get_user_posts(self, user_id: int, offset: int, limit: int) -> UserPosts:
         pass
 
     @abc.abstractmethod
-    def get_reactions_to_post(self, post_id: int) -> List[ReactionDetailsDTO]:
+    def get_reactions_to_post(self, post_id: int, offset: int, limit: int) -> List[ReactionDetailsDTO]:
         pass
 
     @abc.abstractmethod
-    def get_posts_reacted_by_user(self, user_id: int) -> UserPosts:
+    def get_posts_reacted_by_user(self, user_id: int) -> List[PostIdDTO]:
         pass
 
     @abc.abstractmethod
@@ -129,7 +134,7 @@ class PostStorage:
         pass
 
     @abc.abstractmethod
-    def get_reaction_metrics(self, post_id: int) -> List[ReactionMetricsDTO]:
+    def get_reaction_metrics(self, post_id: int) -> List[ReactionCountDTO]:
         pass
 
     @abc.abstractmethod
@@ -137,7 +142,7 @@ class PostStorage:
         pass
 
     @abc.abstractmethod
-    def delete_post(self, post_id) -> Dict:
+    def delete_post(self, post_id) -> PostIdDTO:
         pass
 
     @abc.abstractmethod
@@ -173,5 +178,5 @@ class PostStorage:
         pass
 
     @abc.abstractmethod
-    def get_comment(self, comment_id: int) -> CommentDTO:
+    def get_comment_id(self, comment_id: int) -> CommentIdDTO:
         pass
