@@ -23,7 +23,6 @@ class TestPostReactionExists(unittest.TestCase):
         reaction_dto = ReactionDTO(id=id, react_on_id=post_id, reacted_by=reacted_by, reaction="LIKE")
         mock_post_reaction.objects.get.return_value = reaction
         response = post_storage.post_reaction_exists(post_id, reacted_by)
-        print(response)
 
         assert response == reaction_dto
 
