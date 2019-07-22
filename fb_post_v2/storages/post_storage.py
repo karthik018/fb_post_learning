@@ -5,7 +5,7 @@ from django.db.models import Count, Q, F
 from fb_post_v2.interactors.storages.post_storage import PostIdDTO, GetPostDTO, CommentIdDTO, ReactionIdDTO, CommentDTO, \
     UserPosts, ReactionDetailsDTO, TotalReactionDTO, ReactionDTO, PostStorage, RepliesDTO, UserDTO, \
     ReactionCountDTO, PostDTO, ReactionsDTO, CommentWithRepliesDTO
-from fb_post_v2.models.models import *
+from fb_post_v2.models.models import Post, PostReaction, Comment, CommentReaction, User
 
 
 class PostStorage(PostStorage):
