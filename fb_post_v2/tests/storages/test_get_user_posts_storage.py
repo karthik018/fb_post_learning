@@ -16,7 +16,6 @@ class TestUserPosts:
         self.second_user = User.objects.create(username="Manoj", profile_pic="http://manoj.png")
         self.post4 = Post.objects.create(user_id=self.second_user.id, post_description="first post")
 
-
     def test_user_posts(self, setup_data):
         post_storage = PostStorage()
 
