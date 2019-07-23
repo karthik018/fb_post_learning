@@ -56,10 +56,10 @@ class JsonPresenter(JsonPresenter):
         return {"reply_id": reply_dto.comment_id}
 
     def react_to_post_response(self, reaction_dto: ReactionIdDTO):
-        return {"reaction_id": reaction_dto.reaction_id}
+        return {"reactionid": reaction_dto.reaction_id}
 
     def react_to_comment(self, reaction_dto: ReactionIdDTO):
-        return {"reaction_id": reaction_dto.reaction_id}
+        return {"reactionid": reaction_dto.reaction_id}
 
     def get_comment_replies(self, replies_dto: List[RepliesDTO]):
         replies = []
