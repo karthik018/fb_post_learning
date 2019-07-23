@@ -48,7 +48,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_posts_reacted_by_user(self, posts_dto: List[PostIdDTO]):
+    def get_posts_reacted_by_user_response(self, posts_dto: List[PostIdDTO]):
         pass
 
     @abc.abstractmethod

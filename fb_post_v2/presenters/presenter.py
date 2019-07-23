@@ -84,7 +84,7 @@ class JsonPresenter(JsonPresenter):
 
         return {"reactions": reactions}
 
-    def get_posts_reacted_by_user(self, posts_dto: List[PostIdDTO]):
+    def get_posts_reacted_by_user_response(self, posts_dto: List[PostIdDTO]):
         posts = []
         for post_dto in posts_dto:
             post = {"postid": post_dto.post_id}

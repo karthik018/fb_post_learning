@@ -9,5 +9,5 @@ class GetPostsReactedByUserInteractor:
 
     def get_posts_reacted_by_user(self, user_id: int) -> dict:
         posts_dto = self.post_storage.get_posts_reacted_by_user(user_id)
-        response = self.presenter.get_posts_reacted_by_user(posts_dto)
+        response = self.presenter.get_posts_reacted_by_user_response(posts_dto)
         return response
