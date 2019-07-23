@@ -28,7 +28,7 @@ class JsonPresenter(JsonPresenter):
                               "types": comment.comment_reactions.types},
                 "replies_count": comment.replies_count, "replies": replies}
 
-    def get_post(self, get_post_dto: GetPostDTO):
+    def get_post_response(self, get_post_dto: GetPostDTO):
 
         comments = []
         for comment in get_post_dto.comments:

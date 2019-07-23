@@ -18,9 +18,9 @@ class TestGetPost(unittest.TestCase):
         response_data = {"post_id": 1}
 
         post_storage_mock.get_post.return_value = getpost_dto
-        presenter_mock.get_post.return_value = response_data
+        presenter_mock.get_post_response.return_value = response_data
         response = get_post.get_post(post_id)
 
         post_storage_mock.get_post.assert_called_once_with(post_id)
-        presenter_mock.get_post.assert_called_once_with(getpost_dto)
+        presenter_mock.get_post_response.assert_called_once_with(getpost_dto)
         assert response == response_data

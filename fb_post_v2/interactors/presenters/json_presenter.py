@@ -16,7 +16,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_post(self, get_post_dto: GetPostDTO):
+    def get_post_response(self, get_post_dto: GetPostDTO):
         pass
 
     @abc.abstractmethod
