@@ -1,29 +1,24 @@
 from django_swagger_utils.drf_server.utils.decorator.interface_decorator \
     import validate_decorator
-from .validator_class import ValidatorClass
 
+from fb_post_v2.interactors.get_reactions_to_post_interactor import GetReactionsToPostInteractor
+from .validator_class import ValidatorClass
+from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.presenters.presenter import JsonPresenter
 
 @validate_decorator(validator_class=ValidatorClass)
 def api_wrapper(*args, **kwargs):
-    # ---------MOCK IMPLEMENTATION---------
+    post_id = kwargs['postid']
+    query_params = kwargs['request_query_params']
+    offset = query_params.offset
+    limit = query_params.limit
 
-    try:
-        from fb_post_v2.views.reactions_to_post.tests.test_case_01 \
-            import TEST_CASE as test_case
-    except ImportError:
-        from fb_post_v2.views.reactions_to_post.tests.test_case_01 \
-            import test_case
+    post_storage = PostStorage()
+    presenter = JsonPresenter()
 
-    from django_swagger_utils.drf_server.utils.server_gen.mock_response \
-        import mock_response
-    try:
-        from fb_post_v2.views.reactions_to_post.request_response_mocks \
-            import RESPONSE_200_JSON
-    except ImportError:
-        RESPONSE_200_JSON = ''
-    response_tuple = mock_response(
-        app_name="fb_post_v2", test_case=test_case,
-        operation_name="reactions_to_post",
-        kwargs=kwargs, default_response_body=RESPONSE_200_JSON,
-        group_name="")
-    return response_tuple[1]
+    interactor = GetReactionsToPostInteractor(post_storage, presenter)
+
+    response = interactor.get_reactions_to_post(post_id, offset, limit)
+
+    import json
+    return json.dumps(response)
