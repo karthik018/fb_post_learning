@@ -64,7 +64,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def delete_post(self, post_id: PostIdDTO):
+    def get_delete_post_response(self, post_id: PostIdDTO):
         pass
 
     @abc.abstractmethod
