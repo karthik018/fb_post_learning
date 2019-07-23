@@ -25,12 +25,12 @@ class TestCommentReplies(unittest.TestCase):
 
         post_storage_mock.check_comment_or_reply.return_value = True
         post_storage_mock.get_comment_replies.return_value = replies_dto
-        presenter_mock.get_comment_replies.return_value = response_data
+        presenter_mock.get_comment_replies_response.return_value = response_data
         response = get_comment_replies.get_comment_replies(comment_id, offset, limit)
 
         post_storage_mock.check_comment_or_reply.assert_called_once_with(comment_id)
         post_storage_mock.get_comment_replies.assert_called_once_with(comment_id, offset, limit)
-        presenter_mock.get_comment_replies.assert_called_once_with(replies_dto)
+        presenter_mock.get_comment_replies_response.assert_called_once_with(replies_dto)
         assert response == response_data
 
     def test_not_comment(self):

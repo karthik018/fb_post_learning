@@ -12,6 +12,6 @@ class CommentRepliesInteractor:
         comment = self.post_storage.check_comment_or_reply(comment_id)
         if comment:
             replies_dto = self.post_storage.get_comment_replies(comment_id, offset, limit)
-            response = self.presenter.get_comment_replies(replies_dto)
+            response = self.presenter.get_comment_replies_response(replies_dto)
             return response
         return self.presenter.raise_not_comment()

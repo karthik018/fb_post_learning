@@ -36,7 +36,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_comment_replies(self, replies_dto: List[RepliesDTO]):
+    def get_comment_replies_response(self, replies_dto: List[RepliesDTO]):
         pass
 
     @abc.abstractmethod
