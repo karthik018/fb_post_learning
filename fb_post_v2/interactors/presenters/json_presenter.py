@@ -20,11 +20,11 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def create_comment(self, comment_dto: CommentIdDTO):
+    def get_create_comment_response(self, comment_dto: CommentIdDTO):
         pass
 
     @abc.abstractmethod
-    def create_reply(self, reply_dto: CommentIdDTO):
+    def get_create_reply_response(self, reply_dto: CommentIdDTO):
         pass
 
     @abc.abstractmethod

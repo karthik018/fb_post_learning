@@ -24,12 +24,12 @@ class TestReplyToComment(unittest.TestCase):
         post_storage_mock.check_comment_or_reply.return_value = False
         post_storage_mock.get_comment_id.return_value = comment_id_dto
         post_storage_mock.create_reply.return_value = comment_id_dto
-        presenter_mock.create_reply.return_value = response_data
+        presenter_mock.get_create_reply_response.return_value = response_data
         response = create_comment.create_reply(comment_id, commenter, comment_content)
 
         post_storage_mock.get_comment_id.assert_called_once_with(comment_id)
         post_storage_mock.create_reply.assert_called_once_with(comment_id_dto.comment_id, commenter, comment_content)
-        presenter_mock.create_reply.assert_called_once_with(comment_id_dto)
+        presenter_mock.get_create_reply_response.assert_called_once_with(comment_id_dto)
         assert response == response_data
 
     def test_reply_to_comment(self):
@@ -45,11 +45,11 @@ class TestReplyToComment(unittest.TestCase):
 
         post_storage_mock.check_comment_or_reply.return_value = True
         post_storage_mock.create_reply.return_value = comment_id_dto
-        presenter_mock.create_reply.return_value = response_data
+        presenter_mock.get_create_reply_response.return_value = response_data
         response = create_comment.create_reply(comment_id, commenter, comment_content)
 
         post_storage_mock.create_reply.assert_called_once_with(comment_id, commenter, comment_content)
-        presenter_mock.create_reply.assert_called_once_with(comment_id_dto)
+        presenter_mock.get_create_reply_response.assert_called_once_with(comment_id_dto)
         assert response == response_data
 
 class TestCreateComment(unittest.TestCase):
@@ -65,9 +65,9 @@ class TestCreateComment(unittest.TestCase):
         response_data = {"comment_id": 1}
 
         post_storage_mock.create_comment.return_value = comment_id_dto
-        presenter_mock.create_comment.return_value = response_data
+        presenter_mock.get_create_comment_response.return_value = response_data
         response = create_comment.create_comment(post_id, commenter, comment_content)
 
         post_storage_mock.create_comment.assert_called_once_with(post_id, commenter, comment_content)
-        presenter_mock.create_comment.assert_called_once_with(comment_id_dto)
+        presenter_mock.get_create_comment_response.assert_called_once_with(comment_id_dto)
         assert response == response_data
