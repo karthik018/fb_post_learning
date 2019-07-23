@@ -1,7 +1,10 @@
 from datetime import datetime
+
+from django_swagger_utils.drf_server.exceptions import BadRequest
 from freezegun import freeze_time
 from fb_post_v2.interactors.storages.post_storage import RepliesDTO, UserDTO
 from fb_post_v2.presenters.presenter import JsonPresenter
+import pytest
 
 class TestCommentReplies:
     @freeze_time("2012-03-26")
@@ -31,3 +34,12 @@ class TestCommentReplies:
         assert test_reply["commenter"]["username"] == user.username
         assert test_reply["comment_message"] == reply_1.comment_content
         assert test_reply["comment_create_date"] == datetime.now()
+
+
+class TestRaiseNotComment:
+
+    def test_raise_not_comment(self):
+        presenter = JsonPresenter()
+
+        with pytest.raises(BadRequest):
+            response = presenter.raise_not_comment()
