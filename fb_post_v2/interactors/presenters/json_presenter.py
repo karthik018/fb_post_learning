@@ -52,7 +52,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_posts_with_more_positive_reactions(self, posts_dto: List[PostIdDTO]):
+    def get_posts_with_more_positive_reactions_response(self, posts_dto: List[PostIdDTO]):
         pass
 
     @abc.abstractmethod

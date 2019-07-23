@@ -23,10 +23,10 @@ class TestPostsWithPositiveReactions(unittest.TestCase):
 
         post_storage_mock.get_posts_with_more_positive_reactions.return_value = [post1_dto, post2_dto,
                                                                                  post3_dto]
-        presenter_mock.get_posts_with_more_positive_reactions.return_value = response_data
+        presenter_mock.get_posts_with_more_positive_reactions_response.return_value = response_data
         response = get_posts_with_more_positive_reactions.get_posts_with_more_positive_reactions()
 
         post_storage_mock.get_posts_with_more_positive_reactions.assert_called_once()
-        presenter_mock.get_posts_with_more_positive_reactions.assert_called_once()
+        presenter_mock.get_posts_with_more_positive_reactions_response.assert_called_once()
         assert response == response_data
 

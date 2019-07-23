@@ -9,5 +9,5 @@ class GetPostsWithPositiveReactionsInteractor:
 
     def get_posts_with_more_positive_reactions(self):
         posts_dto = self.post_storage.get_posts_with_more_positive_reactions()
-        response = self.presenter.get_posts_with_more_positive_reactions(posts_dto)
+        response = self.presenter.get_posts_with_more_positive_reactions_response(posts_dto)
         return response

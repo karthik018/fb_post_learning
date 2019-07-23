@@ -92,7 +92,7 @@ class JsonPresenter(JsonPresenter):
 
         return {"posts": posts}
 
-    def get_posts_with_more_positive_reactions(self, posts_dto: List[PostIdDTO]):
+    def get_posts_with_more_positive_reactions_response(self, posts_dto: List[PostIdDTO]):
         posts = []
         for post_dto in posts_dto:
             post = {"postid": post_dto.post_id}
