@@ -100,7 +100,7 @@ class JsonPresenter(JsonPresenter):
 
         return {"posts": posts}
 
-    def get_reaction_metrics(self, reactions_dto: List[ReactionCountDTO]):
+    def get_reaction_metrics_response(self, reactions_dto: List[ReactionCountDTO]):
         reactions = []
         for reaction_dto in reactions_dto:
             reaction_metric = {"count": reaction_dto.count, "reaction": reaction_dto.reaction}
