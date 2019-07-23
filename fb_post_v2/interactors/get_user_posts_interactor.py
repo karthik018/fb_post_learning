@@ -10,5 +10,5 @@ class GetUserPostsInteractor:
 
     def get_user_posts(self, user_id: int, offset: int, limit: int) -> dict:
         posts_dto = self.post_storage.get_user_posts(user_id, offset, limit)
-        response = self.presenter.get_user_posts(posts_dto)
+        response = self.presenter.get_user_posts_response(posts_dto)
         return response

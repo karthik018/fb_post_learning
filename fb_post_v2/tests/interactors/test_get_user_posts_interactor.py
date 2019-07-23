@@ -20,9 +20,9 @@ class TestUserPosts(unittest.TestCase):
         response_data = {"posts": [{"post_id": 1}, {"post_id": 5}]}
 
         post_storage_mock.get_user_posts.return_value = user_posts_dto
-        presenter_mock.get_user_posts.return_value = response_data
+        presenter_mock.get_user_posts_response.return_value = response_data
         response = get_user_posts.get_user_posts(user_id, offset, limit)
 
         post_storage_mock.get_user_posts.assert_called_once_with(user_id, offset, limit)
-        presenter_mock.get_user_posts.assert_called_once_with(user_posts_dto)
+        presenter_mock.get_user_posts_response.assert_called_once_with(user_posts_dto)
         assert response == response_data

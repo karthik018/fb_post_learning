@@ -40,7 +40,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_user_posts(self, posts_dto: UserPosts):
+    def get_user_posts_response(self, posts_dto: UserPosts):
         pass
 
     @abc.abstractmethod

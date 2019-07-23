@@ -71,8 +71,8 @@ class JsonPresenter(JsonPresenter):
             replies.append(reply)
         return {"replies": replies}
 
-    def get_user_posts(self, posts_dto: UserPosts):
-        user_posts = [self.get_post(get_post_dto) for get_post_dto in posts_dto.posts]
+    def get_user_posts_response(self, posts_dto: UserPosts):
+        user_posts = [self.get_post_response(get_post_dto) for get_post_dto in posts_dto.posts]
         return {"posts": user_posts}
 
     def get_reactions_to_post_response(self, reactions_dto: List[ReactionDetailsDTO]):
