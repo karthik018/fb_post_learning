@@ -60,7 +60,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_total_reaction_count(self, count_dto: TotalReactionDTO):
+    def get_total_reaction_count_response(self, count_dto: TotalReactionDTO):
         pass
 
     @abc.abstractmethod

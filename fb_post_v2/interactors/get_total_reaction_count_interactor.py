@@ -9,5 +9,5 @@ class GetTotalReactionCountInteractor:
 
     def get_total_reaction_count(self) -> dict:
         count_dto = self.post_storage.get_total_reaction_count()
-        response = self.presenter.get_total_reaction_count(count_dto)
+        response = self.presenter.get_total_reaction_count_response(count_dto)
         return response

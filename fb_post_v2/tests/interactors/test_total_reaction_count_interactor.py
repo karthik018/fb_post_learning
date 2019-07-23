@@ -17,9 +17,9 @@ class TestTotalReactionCount(unittest.TestCase):
         response_data = {"total_count": 5}
 
         post_storage_mock.get_total_reaction_count.return_value = total_count_dto
-        presenter_mock.get_total_reaction_count.return_value = response_data
+        presenter_mock.get_total_reaction_count_response.return_value = response_data
         response = total_count.get_total_reaction_count()
 
         post_storage_mock.get_total_reaction_count.assert_called_once()
-        presenter_mock.get_total_reaction_count.assert_called_once_with(total_count_dto)
+        presenter_mock.get_total_reaction_count_response.assert_called_once_with(total_count_dto)
         assert response == response_data

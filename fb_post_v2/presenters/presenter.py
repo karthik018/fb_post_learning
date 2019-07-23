@@ -108,7 +108,7 @@ class JsonPresenter(JsonPresenter):
 
         return {"reactions": reactions}
 
-    def get_total_reaction_count(self, count_dto: TotalReactionDTO):
+    def get_total_reaction_count_response(self, count_dto: TotalReactionDTO):
         return {"total_count": count_dto.count}
 
     def get_delete_post_response(self, post_id: PostIdDTO):
