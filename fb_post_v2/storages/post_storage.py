@@ -26,7 +26,6 @@ class PostStorage(PostStorage):
                 comment_replies[reply['commented_on_id']].append(reply)
             except:
                 comment_replies[reply['commented_on_id']] = [reply]
-        print(comment_replies)
         return comment_replies
 
     def get_all_comment_reactions(self, all_comment_reactions):

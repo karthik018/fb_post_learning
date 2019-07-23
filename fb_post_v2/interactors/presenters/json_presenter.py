@@ -72,9 +72,5 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def delete_post_reaction(self):
-        pass
-
-    @abc.abstractmethod
     def raise_not_comment(self):
         pass
