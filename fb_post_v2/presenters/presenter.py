@@ -55,10 +55,10 @@ class JsonPresenter(JsonPresenter):
     def get_create_reply_response(self, reply_dto: CommentIdDTO):
         return {"reply_id": reply_dto.comment_id}
 
-    def react_to_post_response(self, reaction_dto: ReactionIdDTO):
+    def get_react_to_post_response(self, reaction_dto: ReactionIdDTO):
         return {"reactionid": reaction_dto.reaction_id}
 
-    def react_to_comment(self, reaction_dto: ReactionIdDTO):
+    def get_react_to_comment_response(self, reaction_dto: ReactionIdDTO):
         return {"reactionid": reaction_dto.reaction_id}
 
     def get_comment_replies(self, replies_dto: List[RepliesDTO]):

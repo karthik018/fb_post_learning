@@ -28,11 +28,11 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def react_to_post_response(self, reaction_dto: ReactionIdDTO):
+    def get_react_to_post_response(self, reaction_dto: ReactionIdDTO):
         pass
 
     @abc.abstractmethod
-    def react_to_comment(self, reaction_dto: ReactionIdDTO):
+    def get_react_to_comment_response(self, reaction_dto: ReactionIdDTO):
         pass
 
     @abc.abstractmethod
