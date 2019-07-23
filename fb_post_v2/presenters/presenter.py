@@ -7,7 +7,26 @@ from fb_post_v2.interactors.storages.post_storage import PostIdDTO, TotalReactio
 
 class JsonPresenter(JsonPresenter):
     def create_post(self, post_dto: PostIdDTO):
-        return {"post_id": post_dto.post_id}
+        return {"postid": post_dto.post_id}
+
+    def get_reply_data(self, reply):
+        return {"comment_id": reply.id, "commenter": {"user_id": reply.user.user_id,
+                                                      "username": reply.user.username,
+                                                      "profile_pic": reply.user.profile_pic},
+                "comment_message": reply.comment_content,
+                "comment_create_date": reply.comment_create_date,
+                "reactions": {"count": reply.comment_reactions.count,
+                              "types": reply.comment_reactions.types}}
+
+    def get_comment_data(self, comment, replies):
+        return {"comment_id": comment.id, "commenter": {"userid": comment.user.user_id,
+                                                        "username": comment.user.username,
+                                                        "profile_pic": comment.user.profile_pic},
+                "comment_message": comment.comment_content,
+                "comment_create_date": comment.comment_create_date,
+                "reactions": {"count": comment.comment_reactions.count,
+                              "types": comment.comment_reactions.types},
+                "replies_count": comment.replies_count, "replies": replies}
 
     def get_post(self, get_post_dto: GetPostDTO):
 
@@ -15,22 +34,9 @@ class JsonPresenter(JsonPresenter):
         for comment in get_post_dto.comments:
             replies = []
             for reply in comment.replies:
-                comment_reply = {"comment_id": reply.id, "commenter": {"user_id": reply.user.user_id,
-                                                                       "username": reply.user.username,
-                                                                       "profile_pic": reply.user.profile_pic},
-                                 "comment_message": reply.comment_content,
-                                 "comment_create_date": reply.comment_create_date,
-                                 "reactions": {"count": reply.comment_reactions.count,
-                                               "types": reply.comment_reactions.types}}
+                comment_reply = self.get_reply_data(reply)
                 replies.append(comment_reply)
-            post_comment = {"comment_id": comment.id, "commenter": {"userid": comment.user.user_id,
-                                                                    "username": comment.user.username,
-                                                                    "profile_pic": comment.user.profile_pic},
-                            "comment_message": comment.comment_content,
-                            "comment_create_date": comment.comment_create_date,
-                            "reactions": {"count": comment.comment_reactions.count,
-                                          "types": comment.comment_reactions.types},
-                            "replies_count": comment.replies_count, "replies": replies}
+            post_comment = self.get_comment_data(comment, replies)
             comments.append(post_comment)
 
         post = {"postid": get_post_dto.post.id, "posted_by": {"userid": get_post_dto.posted_by.user_id,

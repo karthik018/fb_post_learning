@@ -12,7 +12,6 @@ RESPONSE_200_JSON = """
                 "profile_pic": "string"
             },
             "comment_message": "string",
-            "comment_create_date": "2099-12-31 00:00:00",
             "reactions": {
                 "count": 1,
                 "types": [

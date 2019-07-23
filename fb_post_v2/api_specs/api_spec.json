@@ -69,15 +69,10 @@
       "properties": {
         "post_content": {
           "type": "string"
-        },
-        "post_create_date": {
-          "type": "string",
-          "format": "date-time"
         }
       },
       "required": [
-        "post_content",
-        "post_create_date"
+        "post_content"
       ]
     },
     "Comment": {
@@ -85,15 +80,10 @@
       "properties": {
         "comment_message": {
           "type": "string"
-        },
-        "comment_create_date": {
-          "type": "string",
-          "format": "date-time"
         }
       },
       "required": [
-        "comment_message",
-        "comment_create_date"
+        "comment_message"
       ]
     },
     "CommentWithUser": {

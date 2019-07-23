@@ -10,4 +10,5 @@ class CreatePostInteractor:
     def create_post(self, post_content: str, created_by: int) -> dict:
         post_dto = self.post_storage.create_post(post_content, created_by)
         response = self.presenter.create_post(post_dto)
+        print(response)
         return response

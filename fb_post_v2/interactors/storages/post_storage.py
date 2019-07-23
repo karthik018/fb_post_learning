@@ -18,7 +18,7 @@ class PostDTO:
 
 @dataclass
 class PostIdDTO:
-    post_id: int
+    post_id: Optional[int]
 
 @dataclass
 class RepliesDTO:
