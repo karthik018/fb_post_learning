@@ -1,29 +1,19 @@
 from django_swagger_utils.drf_server.utils.decorator.interface_decorator \
     import validate_decorator
-from .validator_class import ValidatorClass
 
+from fb_post_v2.interactors.get_total_reaction_count_interactor import GetTotalReactionCountInteractor
+from .validator_class import ValidatorClass
+from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.presenters.presenter import JsonPresenter
 
 @validate_decorator(validator_class=ValidatorClass)
 def api_wrapper(*args, **kwargs):
-    # ---------MOCK IMPLEMENTATION---------
+    post_storage = PostStorage()
+    presenter = JsonPresenter()
 
-    try:
-        from fb_post_v2.views.total_reaction_count.tests.test_case_01 \
-            import TEST_CASE as test_case
-    except ImportError:
-        from fb_post_v2.views.total_reaction_count.tests.test_case_01 \
-            import test_case
+    interactor = GetTotalReactionCountInteractor(post_storage, presenter)
 
-    from django_swagger_utils.drf_server.utils.server_gen.mock_response \
-        import mock_response
-    try:
-        from fb_post_v2.views.total_reaction_count.request_response_mocks \
-            import RESPONSE_200_JSON
-    except ImportError:
-        RESPONSE_200_JSON = ''
-    response_tuple = mock_response(
-        app_name="fb_post_v2", test_case=test_case,
-        operation_name="total_reaction_count",
-        kwargs=kwargs, default_response_body=RESPONSE_200_JSON,
-        group_name="")
-    return response_tuple[1]
+    response = interactor.get_total_reaction_count()
+
+    import json
+    return json.dumps(response)
