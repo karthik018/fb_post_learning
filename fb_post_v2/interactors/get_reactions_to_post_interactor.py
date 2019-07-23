@@ -10,5 +10,5 @@ class GetReactionsToPostInteractor:
 
     def get_reactions_to_post(self, post_id: int, offset: int, limit: int) -> dict:
         reactions_dto = self.post_storage.get_reactions_to_post(post_id, offset, limit)
-        response = self.presenter.get_reactions_to_post(reactions_dto)
+        response = self.presenter.get_reactions_to_post_response(reactions_dto)
         return response

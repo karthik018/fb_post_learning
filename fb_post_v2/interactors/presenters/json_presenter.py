@@ -44,7 +44,7 @@ class JsonPresenter:
         pass
 
     @abc.abstractmethod
-    def get_reactions_to_post(self, reactions_dto: List[ReactionDetailsDTO]):
+    def get_reactions_to_post_response(self, reactions_dto: List[ReactionDetailsDTO]):
         pass
 
     @abc.abstractmethod

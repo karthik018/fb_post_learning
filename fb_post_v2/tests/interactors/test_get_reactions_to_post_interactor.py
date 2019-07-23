@@ -23,9 +23,9 @@ class TestPostReactions(unittest.TestCase):
         response_data = {"reactions": [{"reaction": "LIKE"}, {"reaction": "LOVE"}]}
 
         post_storage_mock.get_reactions_to_post.return_value = reactions_dto
-        presenter_mock.get_reactions_to_post.return_value = response_data
+        presenter_mock.get_reactions_to_post_response.return_value = response_data
         response = get_reactions_to_post.get_reactions_to_post(post_id, offset, limit)
 
         post_storage_mock.get_reactions_to_post.assert_called_once_with(post_id, offset, limit)
-        presenter_mock.get_reactions_to_post.assert_called_once_with(reactions_dto)
+        presenter_mock.get_reactions_to_post_response.assert_called_once_with(reactions_dto)
         assert response == response_data
