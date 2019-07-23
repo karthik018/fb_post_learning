@@ -12,7 +12,7 @@ class JsonPresenter:
     __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
-    def create_post(self, post_dto: PostIdDTO):
+    def get_create_post_response(self, post_dto: PostIdDTO):
         pass
 
     @abc.abstractmethod

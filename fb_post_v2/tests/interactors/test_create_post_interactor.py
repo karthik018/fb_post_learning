@@ -15,9 +15,9 @@ class TestCreatePost(unittest.TestCase):
         create_post = CreatePostInteractor(post_storage_mock, presenter_mock)
 
         post_storage_mock.create_post.return_value = postid_dto
-        presenter_mock.create_post.return_value = {"post_id": 1}
+        presenter_mock.get_create_post_response.return_value = {"post_id": 1}
         response = create_post.create_post("test post", 1)
 
         post_storage_mock.create_post.assert_called_once_with("test post", 1)
-        presenter_mock.create_post.assert_called_once_with(postid_dto)
+        presenter_mock.get_create_post_response.assert_called_once_with(postid_dto)
         assert response == {"post_id": 1}

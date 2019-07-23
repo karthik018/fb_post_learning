@@ -6,10 +6,10 @@ from fb_post_v2.interactors.storages.post_storage import PostIdDTO, TotalReactio
 
 
 class JsonPresenter(JsonPresenter):
-    def create_post(self, post_dto: PostIdDTO):
+    def get_create_post_response(self, post_dto: PostIdDTO):
         return {"postid": post_dto.post_id}
 
-    def get_reply_data(self, reply):
+    def get_reply_dict(self, reply):
         return {"comment_id": reply.id, "commenter": {"user_id": reply.user.user_id,
                                                       "username": reply.user.username,
                                                       "profile_pic": reply.user.profile_pic},
@@ -18,7 +18,7 @@ class JsonPresenter(JsonPresenter):
                 "reactions": {"count": reply.comment_reactions.count,
                               "types": reply.comment_reactions.types}}
 
-    def get_comment_data(self, comment, replies):
+    def get_comment_dict(self, comment, replies):
         return {"comment_id": comment.id, "commenter": {"userid": comment.user.user_id,
                                                         "username": comment.user.username,
                                                         "profile_pic": comment.user.profile_pic},
@@ -34,9 +34,9 @@ class JsonPresenter(JsonPresenter):
         for comment in get_post_dto.comments:
             replies = []
             for reply in comment.replies:
-                comment_reply = self.get_reply_data(reply)
+                comment_reply = self.get_reply_dict(reply)
                 replies.append(comment_reply)
-            post_comment = self.get_comment_data(comment, replies)
+            post_comment = self.get_comment_dict(comment, replies)
             comments.append(post_comment)
 
         post = {"postid": get_post_dto.post.id, "posted_by": {"userid": get_post_dto.posted_by.user_id,
