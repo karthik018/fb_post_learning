@@ -14,7 +14,7 @@ class JsonPresenter(JsonPresenter):
                                                       "username": reply.user.username,
                                                       "profile_pic": reply.user.profile_pic},
                 "comment_message": reply.comment_content,
-                "comment_create_date": reply.comment_create_date,
+                "comment_create_date": reply.comment_create_date.strftime("%Y-%m-%d %H:%M:%S"),
                 "reactions": {"count": reply.comment_reactions.count,
                               "types": reply.comment_reactions.types}}
 
@@ -23,7 +23,7 @@ class JsonPresenter(JsonPresenter):
                                                         "username": comment.user.username,
                                                         "profile_pic": comment.user.profile_pic},
                 "comment_message": comment.comment_content,
-                "comment_create_date": comment.comment_create_date,
+                "comment_create_date": comment.comment_create_date.strftime("%Y-%m-%d %H:%M:%S"),
                 "reactions": {"count": comment.comment_reactions.count,
                               "types": comment.comment_reactions.types},
                 "replies_count": comment.replies_count, "replies": replies}
@@ -42,7 +42,7 @@ class JsonPresenter(JsonPresenter):
         post = {"postid": get_post_dto.post.id, "posted_by": {"userid": get_post_dto.posted_by.user_id,
                                                               "username": get_post_dto.posted_by.username,
                                                               "profile_pic": get_post_dto.posted_by.profile_pic},
-                "post_content": get_post_dto.post.post_content, "post_create_date": get_post_dto.post.post_create_date,
+                "post_content": get_post_dto.post.post_content, "post_create_date": get_post_dto.post.post_create_date.strftime("%Y-%m-%d %H:%M:%S"),
                 "reactions": {"count": get_post_dto.reactions.count,
                               "types": get_post_dto.reactions.types}, "comment_count": get_post_dto.comment_count,
                 "comments": comments}
@@ -67,7 +67,7 @@ class JsonPresenter(JsonPresenter):
             reply = {"comment_id": reply_dto.comment_id, "commenter": {"user_id": reply_dto.user.user_id,
                                                                        "username": reply_dto.user.username,
                                                                        "profile_pic": reply_dto.user.profile_pic},
-                     "comment_create_date": reply_dto.comment_create_date, "comment_message": reply_dto.comment_content}
+                     "comment_create_date": reply_dto.comment_create_date.strftime("%Y-%m-%d %H:%M:%S"), "comment_message": reply_dto.comment_content}
             replies.append(reply)
         return {"replies": replies}
 
