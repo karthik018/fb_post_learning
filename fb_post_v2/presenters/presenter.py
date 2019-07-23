@@ -53,7 +53,7 @@ class JsonPresenter(JsonPresenter):
         return {"comment_id": comment_dto.comment_id}
 
     def create_reply(self, reply_dto: CommentIdDTO):
-        return {"comment_id": reply_dto.comment_id}
+        return {"reply_id": reply_dto.comment_id}
 
     def react_to_post_response(self, reaction_dto: ReactionIdDTO):
         return {"reaction_id": reaction_dto.reaction_id}
