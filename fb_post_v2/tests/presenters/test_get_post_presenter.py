@@ -5,7 +5,7 @@ from fb_post_v2.interactors.storages.post_storage import UserDTO, PostDTO, React
 import pytest
 
 class TestGetPost:
-    @freeze_time("2012-03-26")
+    @freeze_time("2012-03-26 00:00:00")
     @pytest.fixture
     def setup_data(self):
         user = UserDTO(user_id=1, username='karthik', profile_pic="")
@@ -19,7 +19,7 @@ class TestGetPost:
     def test_get_post(self, setup_data):
         presenter = JsonPresenter()
 
-        response = presenter.get_post(self.get_post_dto)
+        response = presenter.get_post_response(self.get_post_dto)
 
         assert response["postid"] == self.get_post_dto.post.id
         assert response["posted_by"]["userid"] == self.get_post_dto.posted_by.user_id
@@ -27,7 +27,7 @@ class TestGetPost:
         assert response["posted_by"]["profile_pic"] == self.get_post_dto.posted_by.profile_pic
 
         assert response["post_content"] == self.get_post_dto.post.post_content
-        assert response["post_create_date"] == self.get_post_dto.post.post_create_date
+        assert response["post_create_date"] == self.get_post_dto.post.post_create_date.strftime("%Y-%m-%d %H:%M:%S")
 
         assert response["reactions"]["count"] == self.get_post_dto.reactions.count
         assert response["reactions"]["types"] == self.get_post_dto.reactions.types

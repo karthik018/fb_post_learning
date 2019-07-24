@@ -13,7 +13,7 @@ class TestPostsReactedByUser:
 
         posts_dto = [post1_id_dto, post2_id_dto, post3_id_dto]
 
-        response = presenter.get_posts_reacted_by_user(posts_dto)
+        response = presenter.get_posts_reacted_by_user_response(posts_dto)
 
         assert len(response["posts"]) == len(posts_dto)
 

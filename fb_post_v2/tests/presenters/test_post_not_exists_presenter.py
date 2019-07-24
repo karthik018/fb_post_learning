@@ -19,7 +19,7 @@ class TestDeletePost:
 
         post_id_dto = PostIdDTO(post_id=None)
 
-        response = presenter.delete_post(post_id_dto)
+        response = presenter.get_delete_post_response(post_id_dto)
 
         assert response["post_id"] == post_id_dto.post_id
 

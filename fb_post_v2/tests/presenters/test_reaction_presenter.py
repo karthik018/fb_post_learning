@@ -8,9 +8,9 @@ class TestReactToPost:
 
         reaction_dto = ReactionIdDTO(reaction_id=1)
 
-        response = presenter.react_to_post_response(reaction_dto)
+        response = presenter.get_react_to_post_response(reaction_dto)
 
-        assert response["reaction_id"] == reaction_dto.reaction_id
+        assert response["reactionid"] == reaction_dto.reaction_id
 
 
 class TestReactToComment:
@@ -20,6 +20,6 @@ class TestReactToComment:
 
         reaction_dto = ReactionIdDTO(reaction_id=2)
 
-        response = presenter.react_to_comment(reaction_dto)
+        response = presenter.get_react_to_comment_response(reaction_dto)
 
-        assert response["reaction_id"] == reaction_dto.reaction_id
+        assert response["reactionid"] == reaction_dto.reaction_id

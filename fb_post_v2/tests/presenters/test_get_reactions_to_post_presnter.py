@@ -12,18 +12,18 @@ class TestGetReactionsToPost:
 
         reactions_dto = [reaction1_dto, reaction2_dto, reaction3_dto]
 
-        response = presenter.get_reactions_to_post(reactions_dto=reactions_dto)
+        response = presenter.get_reactions_to_post_response(reactions_dto=reactions_dto)
 
         assert len(response["reactions"]) == len(reactions_dto)
 
-        user_ids = [reaction["user_id"] for reaction in response["reactions"]]
+        user_ids = [reaction["userid"] for reaction in response["reactions"]]
 
         assert reaction1_dto.user_id in user_ids
         assert reaction3_dto.user_id in user_ids
 
         test_reaction = {}
         for reaction in response["reactions"]:
-            if reaction["user_id"] == reaction2_dto.user_id:
+            if reaction["userid"] == reaction2_dto.user_id:
                 test_reaction = reaction
 
         assert test_reaction["reaction"] == reaction2_dto.reaction

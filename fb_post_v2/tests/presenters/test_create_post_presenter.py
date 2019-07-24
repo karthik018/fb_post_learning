@@ -10,6 +10,6 @@ class TestCreatePost:
         presenter = JsonPresenter()
         post_dto = PostIdDTO(post_id=1)
 
-        response = presenter.create_post(post_dto=post_dto)
+        response = presenter.get_create_post_response(post_dto=post_dto)
 
-        assert response["post_id"] == post_dto.post_id
+        assert response["postid"] == post_dto.post_id

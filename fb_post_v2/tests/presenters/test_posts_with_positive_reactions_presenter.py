@@ -12,7 +12,7 @@ class TestPostsWithPositiveReactions:
 
         posts_dto = [post1_id_dto, post2_id_dto, post3_id_dto]
 
-        response = presenter.get_posts_with_more_positive_reactions(posts_dto)
+        response = presenter.get_posts_with_more_positive_reactions_response(posts_dto)
 
         assert len(response["posts"]) == len(posts_dto)
 

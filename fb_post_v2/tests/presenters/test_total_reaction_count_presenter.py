@@ -8,7 +8,7 @@ class TestTotalReactionCount:
 
         count_dto = TotalReactionDTO(count=2)
 
-        response = presenter.get_total_reaction_count(count_dto)
+        response = presenter.get_total_reaction_count_response(count_dto)
 
         assert response["total_count"] == count_dto.count
 
@@ -22,7 +22,7 @@ class TestReactionMetrics:
 
         reactions_dto = [count1_dto, count2_dto]
 
-        response = presenter.get_reaction_metrics(reactions_dto)
+        response = presenter.get_reaction_metrics_response(reactions_dto)
 
         assert len(response["reactions"]) == len(reactions_dto)
 

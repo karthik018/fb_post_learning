@@ -7,7 +7,7 @@ from fb_post_v2.presenters.presenter import JsonPresenter
 import pytest
 
 class TestCommentReplies:
-    @freeze_time("2012-03-26")
+    @freeze_time("2012-03-26 00:00:00")
     def test_comment_replies(self):
         presenter = JsonPresenter()
         user = UserDTO(user_id=1, username="karthik", profile_pic="")
@@ -16,7 +16,7 @@ class TestCommentReplies:
 
         replies = [reply_1, reply_2]
 
-        response = presenter.get_comment_replies(replies)
+        response = presenter.get_comment_replies_response(replies)
 
         assert len(response["replies"]) == len(replies)
 
@@ -33,7 +33,7 @@ class TestCommentReplies:
         assert test_reply["commenter"]["user_id"] == user.user_id
         assert test_reply["commenter"]["username"] == user.username
         assert test_reply["comment_message"] == reply_1.comment_content
-        assert test_reply["comment_create_date"] == datetime.now()
+        assert test_reply["comment_create_date"] == datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 class TestRaiseNotComment:

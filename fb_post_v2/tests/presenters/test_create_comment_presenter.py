@@ -7,6 +7,6 @@ class TestCreateComment:
 
         comment_id_dto = CommentIdDTO(comment_id=1)
 
-        response = presenter.create_comment(comment_dto=comment_id_dto)
+        response = presenter.get_create_comment_response(comment_dto=comment_id_dto)
 
         assert response["comment_id"] == comment_id_dto.comment_id

@@ -8,6 +8,6 @@ class TestCreateReply:
 
         comment_id_dto = CommentIdDTO(comment_id=1)
 
-        response = presenter.create_reply(comment_id_dto)
+        response = presenter.get_create_reply_response(comment_id_dto)
 
-        assert response["comment_id"] == comment_id_dto.comment_id
+        assert response["reply_id"] == comment_id_dto.comment_id
