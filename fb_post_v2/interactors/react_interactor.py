@@ -28,11 +28,12 @@ class ReactInteractor:
             reaction_dto = self.post_storage.comment_reaction_exists(comment_id, reacted_by)
             if reaction_dto.reaction == reaction_type:
                 delete_reaction = self.post_storage.delete_comment_reaction(comment_id, reacted_by)
-                return self.presenter.get_react_to_comment_response(delete_reaction)
+                response = self.presenter.get_react_to_comment_response(delete_reaction)
             else:
                 update_reaction = self.post_storage.update_comment_reaction(comment_id, reacted_by, reaction_type)
-                return self.presenter.get_react_to_comment_response(update_reaction)
+                response = self.presenter.get_react_to_comment_response(update_reaction)
         except:
             reaction_dto = self.post_storage.react_to_comment(comment_id, reacted_by, reaction_type)
             response = self.presenter.get_react_to_comment_response(reaction_dto)
-            return response
+
+        return response

@@ -13,4 +13,5 @@ class DeletePostInteractor:
             post_dto = self.post_storage.delete_post(post_id)
             response = self.presenter.get_delete_post_response(post_dto)
             return response
+
         return self.presenter.post_not_exists()
