@@ -17,14 +17,13 @@ class TestGetReplies:
         self.first_comment = Comment.objects.create(post_id=self.post.id,
                                                     user_id=self.user.id,
                                                     message="first comment")
-        self.first_reply = Comment.objects.create(post_id=self.post.id,
-                                                  user_id=self.user.id,
-                                                  commented_on_id=self.first_comment.id,
-                                                  message="first reply")
-        self.second_reply = Comment.objects.create(post_id=self.post.id,
-                                                   user_id=self.user.id,
-                                                   commented_on_id=self.first_comment.id,
-                                                   message="second reply")
+        self.first_reply = Comment.objects.create(
+            post_id=self.post.id, user_id=self.user.id,
+            commented_on_id=self.first_comment.id, message="first reply")
+
+        self.second_reply = Comment.objects.create(
+            post_id=self.post.id, user_id=self.user.id,
+            commented_on_id=self.first_comment.id, message="second reply")
 
     def test_get_replies(self, setup_data):
         post_storage = PostStorage()

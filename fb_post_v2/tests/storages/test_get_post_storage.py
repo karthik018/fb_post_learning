@@ -22,20 +22,21 @@ class TestGetPost:
         self.second_comment = Comment.objects.create(post_id=self.post.id,
                                                      user_id=self.second_user.id,
                                                      message="second comment")
-        self.first_reply = Comment.objects.create(post_id=self.post.id,
-                                                  user_id=self.second_user.id,
-                                                  commented_on_id=self.first_comment.id,
-                                                  message="first reply")
-        self.second_reply = Comment.objects.create(post_id=self.post.id,
-                                                   user_id=self.user.id,
-                                                   commented_on_id=self.second_comment.id,
-                                                   message="second reply")
+        self.first_reply = Comment.objects.create(
+            post_id=self.post.id, user_id=self.second_user.id,
+            commented_on_id=self.first_comment.id, message="first reply")
+
+        self.second_reply = Comment.objects.create(
+            post_id=self.post.id, user_id=self.user.id,
+            commented_on_id=self.second_comment.id, message="second reply")
+
         self.first_reaction = PostReaction.objects.create(post_id=self.post.id,
                                                           user_id=self.user.id,
                                                           reaction="LOVE")
-        self.second_reaction = PostReaction.objects.create(post_id=self.post.id,
-                                                           user_id=self.second_user.id,
-                                                           reaction="LOVE")
+
+        self.second_reaction = PostReaction.objects.create(
+            post_id=self.post.id, user_id=self.second_user.id, reaction="LOVE")
+
         self.first_comment_reaction = CommentReaction.objects.create(
             comment_id=self.first_comment.id,
             user_id=self.user.id, reaction="LIKE")
@@ -107,7 +108,8 @@ class TestGetPost:
                    'user__username': self.first_comment.user.username,
                    'user__profile_pic': self.first_comment.user.profile_pic,
                    'commented_on_id': self.first_comment.commented_on_id,
-                   'comment_create_date': self.first_comment.comment_create_date,
+                   'comment_create_date':
+                       self.first_comment.comment_create_date,
                    'message': self.first_comment.message}
 
         user_dto = post_storage.get_commenter_dto(comment)
@@ -152,7 +154,8 @@ class TestGetPost:
                    'user__username': self.first_comment.user.username,
                    'user__profile_pic': self.first_comment.user.profile_pic,
                    'message': self.first_comment.message,
-                   'comment_create_date': self.first_comment.comment_create_date}
+                   'comment_create_date': self.first_comment.comment_create_date
+                   }
 
         comment_reactions = {
             self.first_comment.id: {'count': 2, 'types': ['LIKE', 'LOVE']}}

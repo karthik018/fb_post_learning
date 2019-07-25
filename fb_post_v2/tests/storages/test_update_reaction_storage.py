@@ -16,9 +16,8 @@ class TestUpdatePostReaction:
                                                profile_pic="http://manoj.png")
         self.first_post = Post.objects.create(user_id=self.user.id,
                                               post_description="first post")
-        self.first_Reaction = PostReaction.objects.create(user_id=self.user.id,
-                                                          post_id=self.first_post.id,
-                                                          reaction="LIKE")
+        self.first_Reaction = PostReaction.objects.create(
+            user_id=self.user.id, post_id=self.first_post.id, reaction="LIKE")
 
     def test_delete_post_reaction(self, setup_data):
         post_storage = PostStorage()

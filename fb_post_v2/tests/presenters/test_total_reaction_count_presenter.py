@@ -1,4 +1,4 @@
-from fb_post_v2.interactors.storages.post_storage import TotalReactionCountDTO, \
+from fb_post_v2.interactors.storages.post_storage import TotalReactionCountDTO,\
     ReactionCountDTO
 from fb_post_v2.presenters.presenter import JsonPresenter
 

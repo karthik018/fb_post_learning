@@ -4,8 +4,8 @@ from django.db.models import Count, Q, F
 
 from fb_post_v2.interactors.storages.post_storage import GetPostDTO, \
     CommentDTO, UserReactionDTO, TotalReactionCountDTO, ReactionDTO, \
-    PostStorage, ReplyDTO, UserDTO, ReactionCountDTO, PostDTO, ReactionStatsDTO, \
-    CommentWithRepliesDTO, UserPostsDTO
+    PostStorage, ReplyDTO, UserDTO, ReactionCountDTO, PostDTO, \
+    ReactionStatsDTO, CommentWithRepliesDTO, UserPostsDTO
 from fb_post_v2.models.models import Post, PostReaction, Comment, \
     CommentReaction
 
@@ -41,10 +41,10 @@ class PostStorage(PostStorage):
                 comment_reaction['count'] += 1
                 comment_reaction['types'].add(reaction['reaction'])
             except:
-                comment_reactions[reaction['comment_id']] = {'count': 1,
-                                                             'types': {
-                                                                 reaction[
-                                                                     'reaction']}}
+                comment_reactions[reaction['comment_id']] = {
+                    'count': 1,
+                    'types': {reaction['reaction']}
+                }
 
         return comment_reactions
 
@@ -139,16 +139,15 @@ class PostStorage(PostStorage):
         post_reaction_type = post_reactions.distinct()
 
         post_reaction_dto = ReactionStatsDTO(count=post_reaction_count,
-                                            types=list(post_reaction_type))
+                                             types=list(post_reaction_type))
 
-        post_comments = Comment.objects.filter(post_id=post_id,
-                                               commented_on_id=None).values(
-            'id', 'user_id',
-            'user__username',
-            'user__profile_pic',
-            'commented_on_id',
-            'comment_create_date',
-            'message')
+        post_comments = Comment.objects.filter(
+            post_id=post_id, commented_on_id=None).values('id', 'user_id',
+                                                          'user__username',
+                                                          'user__profile_pic',
+                                                          'commented_on_id',
+                                                          'comment_create_date',
+                                                          'message')
 
         comments_ids = [comment['id'] for comment in post_comments]
 
@@ -235,7 +234,8 @@ class PostStorage(PostStorage):
 
             replies_dto = ReplyDTO(comment_id=reply.id, user=userdto,
                                    comment_content=reply.message,
-                                   comment_create_date=reply.comment_create_date)
+                                   comment_create_date=reply.comment_create_date
+                                   )
 
             replies_list.append(replies_dto)
 
@@ -250,8 +250,8 @@ class PostStorage(PostStorage):
 
         return UserPostsDTO(posts=posts_dto)
 
-    def get_post_reactions(self, post_id: int, offset: int, limit: int) -> List[
-                                                                UserReactionDTO]:
+    def get_post_reactions(self, post_id: int, offset: int, limit: int) -> \
+            List[UserReactionDTO]:
 
         post_reactions = PostReaction.objects.filter(post_id=post_id)[
                          offset: offset + limit]

@@ -19,11 +19,10 @@ class TestReactionsToPost:
         self.first_reaction = PostReaction.objects.create(post_id=self.post.id,
                                                           user_id=self.user.id,
                                                           reaction="LIKE")
-        self.second_reaction = PostReaction.objects.create(post_id=self.post.id,
-                                                           user_id=self.second_user.id,
-                                                           reaction="LOVE")
+        self.second_reaction = PostReaction.objects.create(
+            post_id=self.post.id, user_id=self.second_user.id, reaction="LOVE")
 
-    def test_Reactions_to_post(self, setup_data):
+    def test_reactions_to_post(self, setup_data):
         post_storage = PostStorage()
 
         reactions = post_storage.get_post_reactions(self.post.id, offset=0,

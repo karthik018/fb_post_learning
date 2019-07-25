@@ -33,7 +33,8 @@ class TestReactionMetrics(unittest.TestCase):
         response_data = {"count": 1, "reaction": "LIKE"}
 
         post_storage_mock.get_reaction_metrics.return_value = reactions_dto
-        presenter_mock.get_reaction_metrics_response.return_value = response_data
+        presenter_mock.get_reaction_metrics_response.return_value = \
+            response_data
         response = reaction_metrics.get_reaction_metrics(post_id)
 
         post_storage_mock.get_reaction_metrics.assert_called_once_with(post_id)

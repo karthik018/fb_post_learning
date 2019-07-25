@@ -1,10 +1,9 @@
-from dataclasses import fields
 from unittest.mock import Mock
 import unittest
 
-from fb_post_v2.interactors.get_posts_with_more_positive_reactions_interactor import \
-    GetPostsWithPositiveReactionsInteractor
-from fb_post_v2.interactors.storages.post_storage import PostStorage, PostDTO
+from fb_post_v2.interactors.get_posts_with_more_positive_reactions_interactor \
+    import GetPostsWithPositiveReactionsInteractor
+from fb_post_v2.interactors.storages.post_storage import PostStorage
 from fb_post_v2.interactors.presenters.json_presenter import JsonPresenter
 
 

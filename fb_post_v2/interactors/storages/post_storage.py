@@ -3,13 +3,11 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional, List
 
-
 @dataclass
 class UserDTO:
     user_id: int
     username: str
     profile_pic: str
-
 
 @dataclass
 class PostDTO:
@@ -75,7 +73,6 @@ class UserPostsDTO:
 class ReactionCountDTO:
     count: int
     reaction: str
-
 
 @dataclass
 class TotalReactionCountDTO:

@@ -17,10 +17,9 @@ class TestGetCommentId:
         self.first_comment = Comment.objects.create(post_id=self.post.id,
                                                     user_id=self.user.id,
                                                     message="first comment")
-        self.first_reply = Comment.objects.create(post_id=self.post.id,
-                                                  user_id=self.user.id,
-                                                  commented_on_id=self.first_comment.id,
-                                                  message="first reply")
+        self.first_reply = Comment.objects.create(
+            post_id=self.post.id, user_id=self.user.id,
+            commented_on_id=self.first_comment.id, message="first reply")
 
     def test_get_comment_id(self, setup_data):
         post_storage = PostStorage()

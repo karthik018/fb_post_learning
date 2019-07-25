@@ -39,8 +39,8 @@ class TestPostReactions(unittest.TestCase):
         response = get_reactions_to_post.get_reactions_to_post(post_id, offset,
                                                                limit)
 
-        post_storage_mock.get_post_reactions.assert_called_once_with(post_id,
-                                                                     offset, limit)
+        post_storage_mock.get_post_reactions.assert_called_once_with(
+            post_id, offset, limit)
         presenter_mock.get_post_reactions_response.assert_called_once_with(
             reactions_dto)
 

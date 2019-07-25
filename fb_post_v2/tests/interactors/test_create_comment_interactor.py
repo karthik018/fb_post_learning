@@ -79,9 +79,8 @@ class TestCreateComment(unittest.TestCase):
         response = create_comment.create_comment(post_id, commenter,
                                                  comment_content)
 
-        post_storage_mock.create_comment.assert_called_once_with(post_id,
-                                                                 commenter,
-                                                                 comment_content)
+        post_storage_mock.create_comment.assert_called_once_with(
+            post_id, commenter, comment_content)
         presenter_mock.get_create_comment_response.assert_called_once_with(
             comment_id)
         assert response == response_data

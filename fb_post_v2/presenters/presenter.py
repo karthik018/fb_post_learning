@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from fb_post_v2.interactors.presenters.json_presenter import JsonPresenter
-from fb_post_v2.interactors.storages.post_storage import TotalReactionCountDTO, \
+from fb_post_v2.interactors.storages.post_storage import TotalReactionCountDTO,\
     ReactionCountDTO, UserReactionDTO, ReplyDTO, GetPostDTO, UserDTO, \
     ReactionStatsDTO, CommentDTO, CommentWithRepliesDTO, UserPostsDTO
 
@@ -16,6 +16,9 @@ class JsonPresenter(JsonPresenter):
                 "username": user_dto.username,
                 "profile_pic": user_dto.profile_pic}
 
+    def get_datetime_string(self, datetime):
+        return datetime.strftime("%Y-%m-%d %H:%M:%S")
+
     def get_reactions_dict(self, reactions_dto: ReactionStatsDTO) -> dict:
         return {"count": reactions_dto.count,
                 "types": reactions_dto.types}
@@ -24,8 +27,8 @@ class JsonPresenter(JsonPresenter):
         return {"comment_id": reply.id,
                 "commenter": self.get_user_dict(reply.user),
                 "comment_message": reply.comment_content,
-                "comment_create_date": reply.comment_create_date.strftime(
-                    "%Y-%m-%d %H:%M:%S"),
+                "comment_create_date": self.get_datetime_string(
+                    reply.comment_create_date),
                 "reactions": self.get_reactions_dict(reply.comment_reactions)}
 
     def get_comment_dict(self, comment: CommentWithRepliesDTO,
@@ -34,8 +37,8 @@ class JsonPresenter(JsonPresenter):
         return {"comment_id": comment.id,
                 "commenter": self.get_user_dict(comment.user),
                 "comment_message": comment.comment_content,
-                "comment_create_date": comment.comment_create_date.strftime(
-                    "%Y-%m-%d %H:%M:%S"),
+                "comment_create_date": self.get_datetime_string(
+                    comment.comment_create_date),
                 "reactions": self.get_reactions_dict(comment.comment_reactions),
                 "replies_count": comment.replies_count, "replies": replies}
 
@@ -53,8 +56,8 @@ class JsonPresenter(JsonPresenter):
         post = {"postid": get_post_dto.post.id,
                 "posted_by": self.get_user_dict(get_post_dto.posted_by),
                 "post_content": get_post_dto.post.post_content,
-                "post_create_date": get_post_dto.post.post_create_date.strftime(
-                    "%Y-%m-%d %H:%M:%S"),
+                "post_create_date": self.get_datetime_string(
+                    get_post_dto.post.post_create_date),
                 "reactions": self.get_reactions_dict(get_post_dto.reactions),
                 "comment_count": get_post_dto.comment_count,
                 "comments": comments}
@@ -78,8 +81,8 @@ class JsonPresenter(JsonPresenter):
         for reply_dto in replies_dto:
             reply = {"comment_id": reply_dto.comment_id,
                      "commenter": self.get_user_dict(reply_dto.user),
-                     "comment_create_date": reply_dto.comment_create_date.strftime(
-                         "%Y-%m-%d %H:%M:%S"),
+                     "comment_create_date": self.get_datetime_string(
+                         reply_dto.comment_create_date),
                      "comment_message": reply_dto.comment_content}
             replies.append(reply)
 

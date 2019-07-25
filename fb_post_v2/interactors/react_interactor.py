@@ -30,7 +30,8 @@ class ReactInteractor:
             reaction_dto = self.post_storage.add_post_reaction(
                                 post_id, reacted_by, reaction_type)
 
-            response = self.presenter.get_add_post_reaction_response(reaction_dto)
+            response = self.presenter.\
+                get_add_post_reaction_response(reaction_dto)
 
         return response
 

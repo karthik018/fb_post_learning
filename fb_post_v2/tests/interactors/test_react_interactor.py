@@ -78,7 +78,8 @@ class TestCommentReaction(unittest.TestCase):
         reaction_id = 1
 
         reaction_interactor = ReactInteractor(post_storage_mock, presenter_mock)
-        post_storage_mock.comment_reaction_exists.side_effect = ObjectDoesNotExist
+        post_storage_mock.comment_reaction_exists.side_effect = \
+            ObjectDoesNotExist
         post_storage_mock.add_comment_reaction.return_value = reaction_id
         presenter_mock.get_add_comment_reaction_response.return_value = \
                                                             {"reaction_id": 1}
@@ -86,8 +87,9 @@ class TestCommentReaction(unittest.TestCase):
 
         post_storage_mock.add_comment_reaction.assert_called_once_with(1, 1,
                                                                        "LIKE")
-        presenter_mock.get_add_comment_reaction_response.assert_called_once_with(
-            reaction_id)
+        presenter_mock.get_add_comment_reaction_response.\
+            assert_called_once_with(reaction_id)
+
         assert response == {"reaction_id": 1}
 
     def test_same_reaction(self):
