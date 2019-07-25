@@ -64,7 +64,8 @@ class PostStorage(PostStorage):
 
         return comment_reaction_dto
 
-    def get_all_replies_for_comment(self, comment_replies, comment):
+    def get_all_replies_with_count_for_comment(self, comment_replies, comment):
+
         try:
             all_replies = comment_replies[comment['id']]
             replies_count = len(all_replies)
@@ -111,8 +112,9 @@ class PostStorage(PostStorage):
 
         comments_dto_list = []
         for comment in post_comments:
-            all_replies, replies_count = self.get_all_replies_for_comment(
-                comment_replies, comment)
+            all_replies, replies_count = \
+                self.get_all_replies_with_count_for_comment(comment_replies,
+                                                            comment)
 
             replies_dto_list = self.get_replies_dto_list(all_replies,
                                                          comment_reactions)
@@ -164,8 +166,8 @@ class PostStorage(PostStorage):
         comments_ids.extend([reply['id'] for reply in replies])
 
         all_comment_reactions = CommentReaction.objects.filter(
-            comment_id__in=comments_ids).values('comment_id',
-                                                'reaction')
+            comment_id__in=comments_ids).values('comment_id', 'reaction')
+
         comment_reactions = self.get_all_comment_reactions_dict(
             all_comment_reactions)
 
