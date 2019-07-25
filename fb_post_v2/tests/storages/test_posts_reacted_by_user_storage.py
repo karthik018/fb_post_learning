@@ -1,6 +1,6 @@
 import pytest
 from freezegun import freeze_time
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 from fb_post_v2.models.models import *
 
 
@@ -24,7 +24,7 @@ class TestPostsReactedByUser:
             reaction="LOVE")
 
     def test_posts_reacted_by_user(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         posts_reacted = post_storage.get_user_reacted_posts(self.user.id)
 

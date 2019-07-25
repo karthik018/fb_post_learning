@@ -1,6 +1,6 @@
 import pytest
 from freezegun import freeze_time
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 from fb_post_v2.models.models import *
 
 
@@ -24,7 +24,7 @@ class TestUserPosts:
                                          post_description="first post")
 
     def test_user_posts(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         userposts_dto = post_storage.get_user_posts(user_id=self.user.id,
                                                     offset=0, limit=2)

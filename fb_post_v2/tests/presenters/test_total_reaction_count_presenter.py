@@ -1,11 +1,11 @@
 from fb_post_v2.interactors.storages.post_storage import TotalReactionCountDTO,\
     ReactionCountDTO
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 
 class TestTotalReactionCount:
 
     def test_total_reaction_count(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         count_dto = TotalReactionCountDTO(count=2)
 
@@ -16,7 +16,7 @@ class TestTotalReactionCount:
 class TestReactionMetrics:
 
     def test_reaction_metrics(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         count1_dto = ReactionCountDTO(count=2, reaction="LOVE")
         count2_dto = ReactionCountDTO(count=3, reaction="LIKE")

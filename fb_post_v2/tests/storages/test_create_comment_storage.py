@@ -1,6 +1,6 @@
 import pytest
 from freezegun import freeze_time
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 from fb_post_v2.models.models import *
 
 
@@ -16,7 +16,7 @@ class TestCreateComment:
                                         post_description="first post")
 
     def test_create_comment(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
         comment_content = "first comment"
 
         comment_id = post_storage.create_comment(self.post.id, self.user.id,
@@ -43,7 +43,7 @@ class TestCreateReply:
                                                     message="first comment")
 
     def test_create_reply(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
         comment_content = "first reply"
 
         reply_id = post_storage.create_reply(self.first_comment.id,

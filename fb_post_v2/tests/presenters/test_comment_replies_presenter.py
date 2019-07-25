@@ -3,14 +3,14 @@ from datetime import datetime
 from django_swagger_utils.drf_server.exceptions import BadRequest
 from freezegun import freeze_time
 from fb_post_v2.interactors.storages.post_storage import ReplyDTO, UserDTO
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 import pytest
 
 
 class TestCommentReplies:
     @freeze_time("2012-03-26 00:00:00")
     def test_comment_replies(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
         user = UserDTO(user_id=1, username="karthik", profile_pic="")
         reply_1 = ReplyDTO(comment_id=1, user=user,
                            comment_content="first reply",
@@ -46,7 +46,7 @@ class TestCommentReplies:
 class TestRaiseNotComment:
 
     def test_raise_not_comment(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         with pytest.raises(BadRequest):
             response = presenter.raise_not_comment()

@@ -1,12 +1,12 @@
 from unittest.mock import Mock, patch
 import unittest
 
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 
 class TestCommentOrReply(unittest.TestCase):
     @patch('fb_post_v2.storages.post_storage.Comment')
     def test_comment(self, mock_comment):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         comment_id = 2
         comment = Mock()
@@ -18,7 +18,7 @@ class TestCommentOrReply(unittest.TestCase):
 
     @patch('fb_post_v2.storages.post_storage.Comment')
     def test_reply(self, mock_comment):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         comment_id = 2
         comment = Mock()

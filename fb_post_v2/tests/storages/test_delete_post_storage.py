@@ -3,12 +3,12 @@ import unittest
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 
 class TestPostExists(unittest.TestCase):
     @patch('fb_post_v2.storages.post_storage.Post')
     def test_post_exists(self, mock_post):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         post = Mock()
         mock_post.objects.get.return_value = post
@@ -18,7 +18,7 @@ class TestPostExists(unittest.TestCase):
 
     @patch('fb_post_v2.storages.post_storage.Post')
     def test_post_not_exists(self, mock_post):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         mock_post.objects.get.side_effect = ObjectDoesNotExist
         response = post_storage.post_exists(1)

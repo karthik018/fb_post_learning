@@ -1,9 +1,9 @@
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 
 class TestReactToPost:
 
     def test_react_to_post_response(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         reaction_id = 1
 
@@ -15,7 +15,7 @@ class TestReactToPost:
 class TestReactToComment:
 
     def test_react_to_comment(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         reaction_id = 2
 

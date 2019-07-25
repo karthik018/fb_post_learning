@@ -4,12 +4,12 @@ import unittest
 from django.core.exceptions import ObjectDoesNotExist
 
 from fb_post_v2.interactors.storages.post_storage import ReactionDTO
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 
 class TestCommentReactionExists(unittest.TestCase):
     @patch('fb_post_v2.storages.post_storage.CommentReaction')
     def test_comment_reaction_exists(self, mock_comment_reaction):
-        post_storage = PostStorage()
+        post_storage = Storage()
         reaction = Mock()
 
         reaction.id = 1
@@ -26,7 +26,7 @@ class TestCommentReactionExists(unittest.TestCase):
 
     @patch('fb_post_v2.storages.post_storage.CommentReaction')
     def test_comment_reaction_not_exists(self, mock_comment_reaction):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         mock_comment_reaction.objects.get.side_effect = ObjectDoesNotExist
 

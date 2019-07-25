@@ -1,6 +1,6 @@
 import pytest
 from freezegun import freeze_time
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 from fb_post_v2.models.models import *
 
 @pytest.mark.django_db
@@ -13,7 +13,7 @@ class TestCreatePost:
                                         profile_pic='http://karthik.png')
 
     def test_create_post(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
         post_content = "first post"
 
         post_id = post_storage.create_post(post_content, self.user.id)

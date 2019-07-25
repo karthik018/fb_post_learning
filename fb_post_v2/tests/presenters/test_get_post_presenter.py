@@ -1,6 +1,6 @@
 from datetime import datetime
 from freezegun import freeze_time
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 from fb_post_v2.interactors.storages.post_storage import UserDTO, PostDTO, \
     ReactionStatsDTO, GetPostDTO
 import pytest
@@ -21,7 +21,7 @@ class TestGetPost:
                                        comment_count)
 
     def test_get_post(self, setup_data):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         response = presenter.get_post_response(self.get_post_dto)
 
@@ -45,7 +45,7 @@ class TestGetPost:
         assert response["comment_count"] == self.get_post_dto.comment_count
 
     def test_user_dict(self, setup_data):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         user_dict = presenter.get_user_dict(self.get_post_dto.posted_by)
 
@@ -55,7 +55,7 @@ class TestGetPost:
                    "profile_pic"] == self.get_post_dto.posted_by.profile_pic
 
     def test_reactions_dict(self, setup_data):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         reactions_dict = presenter.get_reactions_dict(
             self.get_post_dto.reactions)

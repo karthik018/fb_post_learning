@@ -1,11 +1,11 @@
 from fb_post_v2.interactors.storages.post_storage import UserReactionDTO
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 
 
 class TestGetReactionsToPost:
 
     def test_get_reactions_to_post(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         reaction1_dto = UserReactionDTO(user_id=1, username="karthik",
                                         profile_pic="", reaction="LIKE")

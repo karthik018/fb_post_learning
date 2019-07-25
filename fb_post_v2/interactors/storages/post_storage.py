@@ -1,7 +1,7 @@
 import abc
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Set, Dict
 
 @dataclass
 class UserDTO:
@@ -12,6 +12,7 @@ class UserDTO:
 @dataclass
 class PostDTO:
     id: int
+    user_id: int
     post_content: str
     post_create_date: datetime
 
@@ -38,16 +39,10 @@ class ReactionStatsDTO:
 @dataclass
 class CommentDTO:
     id: int
-    user: UserDTO
+    user_id: int
+    commented_on_id: int
     comment_content: str
     comment_create_date: datetime
-    comment_reactions: ReactionStatsDTO
-
-
-@dataclass
-class CommentWithRepliesDTO(CommentDTO):
-    replies_count: int
-    replies: List[CommentDTO]
 
 
 @dataclass
@@ -58,16 +53,15 @@ class UserReactionDTO(UserDTO):
 @dataclass
 class GetPostDTO:
     post: PostDTO
-    posted_by: UserDTO
-    reactions: ReactionStatsDTO
-    comments: List[CommentWithRepliesDTO]
-    comment_count: int
+    post_reactions: ReactionStatsDTO
+    comments: List[CommentDTO]
+    comment_reactions: Dict[int, ReactionStatsDTO]
+    all_users: List[UserDTO]
 
 
 @dataclass
 class UserPostsDTO:
     posts: List[GetPostDTO]
-
 
 @dataclass
 class ReactionCountDTO:

@@ -1,6 +1,6 @@
 import pytest
 from freezegun import freeze_time
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 from fb_post_v2.models.models import *
 
 
@@ -22,7 +22,7 @@ class TestDeletePostReaction:
                                     post_id=self.first_post.id, reaction="LOVE")
 
     def test_delete_post_reaction(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         reaction_id = post_storage.delete_post_reaction(self.first_post.id,
                                                         self.user.id)
@@ -50,7 +50,7 @@ class TestDeleteCommentReaction:
             user_id=self.user.id, reaction="LIKE")
 
     def test_delete_comment_reaction(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         reaction_id = post_storage.delete_comment_reaction(
             self.first_comment.id, self.user.id)

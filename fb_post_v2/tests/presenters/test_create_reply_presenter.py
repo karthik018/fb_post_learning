@@ -1,9 +1,9 @@
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 
 class TestCreateReply:
 
     def test_create_reply(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         reply_id = 2
 

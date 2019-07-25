@@ -1,8 +1,8 @@
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 class TestCreateComment:
 
     def test_create_comment(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         comment_id = 1
 

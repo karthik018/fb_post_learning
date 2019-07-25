@@ -1,10 +1,10 @@
 
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 
 class TestPostsWithPositiveReactions:
 
     def test_posts_with_more_positive_reactions(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         post1_id = 1
         post2_id = 2

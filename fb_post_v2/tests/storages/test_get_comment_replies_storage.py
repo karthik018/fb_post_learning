@@ -1,6 +1,6 @@
 import pytest
 from freezegun import freeze_time
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 from fb_post_v2.models.models import *
 
 
@@ -26,7 +26,7 @@ class TestGetReplies:
             commented_on_id=self.first_comment.id, message="second reply")
 
     def test_get_replies(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         replies_dto = post_storage.get_comment_replies(self.first_comment.id,
                                                        offset=0, limit=1)

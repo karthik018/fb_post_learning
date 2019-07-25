@@ -1,10 +1,10 @@
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 
 class TestPostsReactedByUser:
 
     def test_posts_reacted_by_user(self):
 
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         post1_id = 1
         post2_id = 2

@@ -1,6 +1,6 @@
 import pytest
 from freezegun import freeze_time
-from fb_post_v2.storages.post_storage import PostStorage
+from fb_post_v2.storages.post_storage import Storage
 from fb_post_v2.models.models import *
 
 
@@ -48,7 +48,7 @@ class TestGetPost:
             user_id=self.second_user.id, reaction="LIKE")
 
     def test_get_post_post_content(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
         get_post_dto = post_storage.get_post(post_id=1)
 
         post = get_post_dto.post
@@ -102,7 +102,7 @@ class TestGetPost:
         assert reply_reactions.types == ['LIKE']
 
     def test_commenter_dto(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
         comment = {'id': self.first_comment.id,
                    'user_id': self.first_comment.user_id,
                    'user__username': self.first_comment.user.username,
@@ -119,7 +119,7 @@ class TestGetPost:
         assert user_dto.profile_pic == comment['user__profile_pic']
 
     def test_comment_reactions_dto(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
         comment_reactions = {
             self.first_comment.id: {'count': 2, 'types': ['LIKE', 'LOVE']}}
 
@@ -132,7 +132,7 @@ class TestGetPost:
             comment_reactions[self.first_comment.id]['types'])
 
     def test_all_comment_reactions(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
         all_comment_reactions = [
             {'comment_id': self.first_comment.id, 'reaction': 'LIKE'},
             {'comment_id': self.first_comment.id, 'reaction': 'LOVE'},
@@ -148,7 +148,7 @@ class TestGetPost:
             all_comment_reactions[1]['reaction']}
 
     def test_get_comment_dto(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
         comment = {'id': self.first_comment.id,
                    'user_id': self.first_comment.user_id,
                    'user__username': self.first_comment.user.username,
@@ -168,7 +168,7 @@ class TestGetPost:
         assert comment_dto.comment_create_date == comment['comment_create_date']
 
     def test_get_comment_with_replies_dto(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
         post_comments = [
             {'id': self.first_comment.id, 'user_id': self.first_comment.user_id,
              'user__username': self.first_comment.user.username,
@@ -200,7 +200,7 @@ class TestGetPost:
         assert comment_with_replies_dto.replies_count == replies_count
 
     def test_all_comment_replies(self, setup_data):
-        post_storage = PostStorage()
+        post_storage = Storage()
 
         replies = [
             {'id': self.first_reply.id, 'user_id': self.first_reply.user_id,

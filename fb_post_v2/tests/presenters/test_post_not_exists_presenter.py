@@ -1,11 +1,11 @@
-from fb_post_v2.presenters.presenter import JsonPresenter
+from fb_post_v2.presenters.presenter import Presenter
 import pytest
 
 
 class TestPostNotExists:
 
     def test_post_not_exists(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         from django_swagger_utils.drf_server.exceptions import BadRequest
         with pytest.raises(BadRequest):
@@ -14,7 +14,7 @@ class TestPostNotExists:
 class TestDeletePost:
 
     def test_delete_post(self):
-        presenter = JsonPresenter()
+        presenter = Presenter()
 
         post_id =None
 

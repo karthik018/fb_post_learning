@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+
 from fb_post_v2.interactors.presenters.json_presenter import JsonPresenter
 from fb_post_v2.interactors.storages.post_storage import PostStorage
 
@@ -26,7 +28,7 @@ class ReactInteractor:
                                         post_id, reacted_by, reaction_type)
                 response = self.presenter.get_add_post_reaction_response(
                                 update_reaction)
-        except:
+        except ObjectDoesNotExist:
             reaction_dto = self.post_storage.add_post_reaction(
                                 post_id, reacted_by, reaction_type)
 
@@ -51,7 +53,7 @@ class ReactInteractor:
                                         comment_id, reacted_by, reaction_type)
                 response = self.presenter.get_add_comment_reaction_response(
                                 update_reaction)
-        except:
+        except ObjectDoesNotExist:
             reaction_dto = self.post_storage.add_comment_reaction(
                                 comment_id, reacted_by, reaction_type)
 
