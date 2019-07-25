@@ -2,17 +2,23 @@ from datetime import datetime
 
 from django_swagger_utils.drf_server.exceptions import BadRequest
 from freezegun import freeze_time
-from fb_post_v2.interactors.storages.post_storage import RepliesDTO, UserDTO
+from fb_post_v2.interactors.storages.post_storage import ReplyDTO, UserDTO
 from fb_post_v2.presenters.presenter import JsonPresenter
 import pytest
+
 
 class TestCommentReplies:
     @freeze_time("2012-03-26 00:00:00")
     def test_comment_replies(self):
         presenter = JsonPresenter()
         user = UserDTO(user_id=1, username="karthik", profile_pic="")
-        reply_1 = RepliesDTO(comment_id=1, user=user, comment_content="first reply", comment_create_date=datetime.now())
-        reply_2 = RepliesDTO(comment_id=2, user=user, comment_content="second reply", comment_create_date=datetime.now())
+        reply_1 = ReplyDTO(comment_id=1, user=user,
+                           comment_content="first reply",
+                           comment_create_date=datetime.now())
+
+        reply_2 = ReplyDTO(comment_id=2, user=user,
+                           comment_content="second reply",
+                           comment_create_date=datetime.now())
 
         replies = [reply_1, reply_2]
 
@@ -30,10 +36,11 @@ class TestCommentReplies:
             if reply["comment_id"] == reply_1.comment_id:
                 test_reply = reply
 
-        assert test_reply["commenter"]["user_id"] == user.user_id
+        assert test_reply["commenter"]["userid"] == user.user_id
         assert test_reply["commenter"]["username"] == user.username
         assert test_reply["comment_message"] == reply_1.comment_content
-        assert test_reply["comment_create_date"] == datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        assert test_reply["comment_create_date"] == datetime.now().strftime(
+                                                    "%Y-%m-%d %H:%M:%S")
 
 
 class TestRaiseNotComment:

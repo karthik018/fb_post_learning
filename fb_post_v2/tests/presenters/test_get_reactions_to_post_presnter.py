@@ -1,18 +1,23 @@
-from fb_post_v2.interactors.storages.post_storage import ReactionDetailsDTO
+from fb_post_v2.interactors.storages.post_storage import UserReactionDTO
 from fb_post_v2.presenters.presenter import JsonPresenter
+
 
 class TestGetReactionsToPost:
 
     def test_get_reactions_to_post(self):
         presenter = JsonPresenter()
 
-        reaction1_dto = ReactionDetailsDTO(user_id=1, username="karthik", profile_pic="", reaction="LIKE")
-        reaction2_dto = ReactionDetailsDTO(user_id=2, username="manoj", profile_pic="", reaction="LOVE")
-        reaction3_dto = ReactionDetailsDTO(user_id=3, username="bharat", profile_pic="", reaction="HAHA")
+        reaction1_dto = UserReactionDTO(user_id=1, username="karthik",
+                                        profile_pic="", reaction="LIKE")
+        reaction2_dto = UserReactionDTO(user_id=2, username="manoj",
+                                        profile_pic="", reaction="LOVE")
+        reaction3_dto = UserReactionDTO(user_id=3, username="bharat",
+                                        profile_pic="", reaction="HAHA")
 
         reactions_dto = [reaction1_dto, reaction2_dto, reaction3_dto]
 
-        response = presenter.get_reactions_to_post_response(reactions_dto=reactions_dto)
+        response = presenter.get_post_reactions_response(
+            reactions_dto=reactions_dto)
 
         assert len(response["reactions"]) == len(reactions_dto)
 

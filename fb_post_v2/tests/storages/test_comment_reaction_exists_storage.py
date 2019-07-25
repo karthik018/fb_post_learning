@@ -17,7 +17,8 @@ class TestCommentReactionExists(unittest.TestCase):
         reaction.user_id = 1
         reaction.reaction = "LIKE"
 
-        reaction_dto = ReactionDTO(id=1, react_on_id=1, reacted_by=1, reaction="LIKE")
+        reaction_dto = ReactionDTO(id=1, react_on_id=1, reacted_by=1,
+                                   reaction="LIKE")
         mock_comment_reaction.objects.get.return_value = reaction
         response = post_storage.comment_reaction_exists(1, 1)
 

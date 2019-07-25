@@ -12,9 +12,9 @@ class TestCommentOrReply(unittest.TestCase):
         comment = Mock()
         comment.commented_on = None
         mock_comment.objects.get.return_value = comment
-        response = post_storage.check_comment_or_reply(comment_id)
+        response = post_storage.is_comment_or_reply(comment_id)
 
-        assert response == True
+        assert response is True
 
     @patch('fb_post_v2.storages.post_storage.Comment')
     def test_reply(self, mock_comment):
@@ -24,6 +24,6 @@ class TestCommentOrReply(unittest.TestCase):
         comment = Mock()
         comment.commented_on = 1
         mock_comment.objects.get.return_value = comment
-        response = post_storage.check_comment_or_reply(comment_id)
+        response = post_storage.is_comment_or_reply(comment_id)
 
-        assert response == False
+        assert response is False

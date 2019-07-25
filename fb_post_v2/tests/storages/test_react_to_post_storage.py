@@ -3,24 +3,28 @@ from freezegun import freeze_time
 from fb_post_v2.storages.post_storage import PostStorage
 from fb_post_v2.models.models import *
 
+
 @pytest.mark.django_db
 class TestReactPost:
 
     @freeze_time("2012-03-26")
     @pytest.fixture
     def setup_data(self):
-        self.user = User.objects.create(username='karthik', profile_pic='http://karthik.png')
-        self.post = Post.objects.create(user_id=self.user.id, post_description="first post")
+        self.user = User.objects.create(username='karthik',
+                                        profile_pic='http://karthik.png')
+        self.post = Post.objects.create(user_id=self.user.id,
+                                        post_description="first post")
 
     def test_react_to_post(self, setup_data):
         post_storage = PostStorage()
         reaction = "LIKE"
 
-        reaction_id_dto = post_storage.react_to_post(self.post.id, self.user.id, reaction)
+        reaction_id = post_storage.add_post_reaction(self.post.id,
+                                                         self.user.id, reaction)
 
-        react = PostReaction.objects.get(id=reaction_id_dto.reaction_id)
+        react = PostReaction.objects.get(id=reaction_id)
 
-        assert reaction_id_dto.reaction_id == 1
+        assert reaction_id == react.id
         assert react.post_id == self.post.id
         assert react.reaction == reaction
 
@@ -30,19 +34,23 @@ class TestReactComment:
     @freeze_time("2012-03-26")
     @pytest.fixture
     def setup_data(self):
-        self.user = User.objects.create(username='karthik', profile_pic='http://karthik.png')
-        self.post = Post.objects.create(user_id=self.user.id, post_description="first post")
-        self.first_comment = Comment.objects.create(post_id=self.post.id, user_id=self.user.id, message="first comment")
+        self.user = User.objects.create(username='karthik',
+                                        profile_pic='http://karthik.png')
+        self.post = Post.objects.create(user_id=self.user.id,
+                                        post_description="first post")
+        self.first_comment = Comment.objects.create(post_id=self.post.id,
+                                                    user_id=self.user.id,
+                                                    message="first comment")
 
     def test_react_to_comment(self, setup_data):
         post_storage = PostStorage()
         reaction = "LOVE"
 
-        reaction_id_dto = post_storage.react_to_comment(self.first_comment.id, self.user.id, reaction)
+        reaction_id = post_storage.add_comment_reaction(
+            self.first_comment.id, self.user.id, reaction)
 
-        react = CommentReaction.objects.get(id=reaction_id_dto.reaction_id)
+        react = CommentReaction.objects.get(id=reaction_id)
 
-        assert reaction_id_dto.reaction_id == 1
+        assert reaction_id == react.id
         assert react.comment_id == self.first_comment.id
         assert react.reaction == reaction
-

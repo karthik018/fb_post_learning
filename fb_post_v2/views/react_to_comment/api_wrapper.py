@@ -18,7 +18,8 @@ def api_wrapper(*args, **kwargs):
 
     interactor = ReactInteractor(post_storage, presenter)
 
-    response = interactor.react_to_comment(comment_id, user.id, request_data['reaction'])
+    response = interactor.react_to_comment(comment_id, user.id,
+                                           request_data['reaction'])
 
     import json
     return json.dumps(response)

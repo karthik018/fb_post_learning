@@ -1,8 +1,8 @@
 from django_swagger_utils.drf_server.utils.decorator.interface_decorator \
     import validate_decorator
 
-from fb_post_v2.interactors.get_posts_with_more_positive_reactions_interactor import \
-    GetPostsWithPositiveReactionsInteractor
+from fb_post_v2.interactors.get_posts_with_more_positive_reactions_interactor \
+    import GetPostsWithPositiveReactionsInteractor
 from .validator_class import ValidatorClass
 from fb_post_v2.storages.post_storage import PostStorage
 from fb_post_v2.presenters.presenter import JsonPresenter

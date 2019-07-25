@@ -1,31 +1,42 @@
-from typing import List
+from typing import List, Optional
 
 from fb_post_v2.interactors.presenters.json_presenter import JsonPresenter
-from fb_post_v2.interactors.storages.post_storage import PostIdDTO, TotalReactionDTO, ReactionCountDTO, \
-    ReactionDetailsDTO, UserPosts, RepliesDTO, ReactionIdDTO, CommentIdDTO, GetPostDTO
+from fb_post_v2.interactors.storages.post_storage import TotalReactionCountDTO, \
+    ReactionCountDTO, UserReactionDTO, ReplyDTO, GetPostDTO, UserDTO, \
+    ReactionStatsDTO, CommentDTO, CommentWithRepliesDTO, UserPostsDTO
 
 
 class JsonPresenter(JsonPresenter):
-    def get_create_post_response(self, post_dto: PostIdDTO):
-        return {"postid": post_dto.post_id}
 
-    def get_reply_dict(self, reply):
-        return {"comment_id": reply.id, "commenter": {"user_id": reply.user.user_id,
-                                                      "username": reply.user.username,
-                                                      "profile_pic": reply.user.profile_pic},
+    def get_create_post_response(self, post_id: int) -> dict:
+        return {"postid": post_id}
+
+    def get_user_dict(self, user_dto: UserDTO) -> dict:
+        return {"userid": user_dto.user_id,
+                "username": user_dto.username,
+                "profile_pic": user_dto.profile_pic}
+
+    def get_reactions_dict(self, reactions_dto: ReactionStatsDTO) -> dict:
+        return {"count": reactions_dto.count,
+                "types": reactions_dto.types}
+
+    def get_reply_dict(self, reply: CommentDTO) -> dict:
+        return {"comment_id": reply.id,
+                "commenter": self.get_user_dict(reply.user),
                 "comment_message": reply.comment_content,
-                "comment_create_date": reply.comment_create_date.strftime("%Y-%m-%d %H:%M:%S"),
-                "reactions": {"count": reply.comment_reactions.count,
-                              "types": reply.comment_reactions.types}}
+                "comment_create_date": reply.comment_create_date.strftime(
+                    "%Y-%m-%d %H:%M:%S"),
+                "reactions": self.get_reactions_dict(reply.comment_reactions)}
 
-    def get_comment_dict(self, comment, replies):
-        return {"comment_id": comment.id, "commenter": {"userid": comment.user.user_id,
-                                                        "username": comment.user.username,
-                                                        "profile_pic": comment.user.profile_pic},
+    def get_comment_dict(self, comment: CommentWithRepliesDTO,
+                         replies: List) -> dict:
+
+        return {"comment_id": comment.id,
+                "commenter": self.get_user_dict(comment.user),
                 "comment_message": comment.comment_content,
-                "comment_create_date": comment.comment_create_date.strftime("%Y-%m-%d %H:%M:%S"),
-                "reactions": {"count": comment.comment_reactions.count,
-                              "types": comment.comment_reactions.types},
+                "comment_create_date": comment.comment_create_date.strftime(
+                    "%Y-%m-%d %H:%M:%S"),
+                "reactions": self.get_reactions_dict(comment.comment_reactions),
                 "replies_count": comment.replies_count, "replies": replies}
 
     def get_post_response(self, get_post_dto: GetPostDTO):
@@ -39,80 +50,89 @@ class JsonPresenter(JsonPresenter):
             post_comment = self.get_comment_dict(comment, replies)
             comments.append(post_comment)
 
-        post = {"postid": get_post_dto.post.id, "posted_by": {"userid": get_post_dto.posted_by.user_id,
-                                                              "username": get_post_dto.posted_by.username,
-                                                              "profile_pic": get_post_dto.posted_by.profile_pic},
-                "post_content": get_post_dto.post.post_content, "post_create_date": get_post_dto.post.post_create_date.strftime("%Y-%m-%d %H:%M:%S"),
-                "reactions": {"count": get_post_dto.reactions.count,
-                              "types": get_post_dto.reactions.types}, "comment_count": get_post_dto.comment_count,
+        post = {"postid": get_post_dto.post.id,
+                "posted_by": self.get_user_dict(get_post_dto.posted_by),
+                "post_content": get_post_dto.post.post_content,
+                "post_create_date": get_post_dto.post.post_create_date.strftime(
+                    "%Y-%m-%d %H:%M:%S"),
+                "reactions": self.get_reactions_dict(get_post_dto.reactions),
+                "comment_count": get_post_dto.comment_count,
                 "comments": comments}
 
         return post
 
-    def get_create_comment_response(self, comment_dto: CommentIdDTO):
-        return {"comment_id": comment_dto.comment_id}
+    def get_create_comment_response(self, comment_id: int):
+        return {"comment_id": comment_id}
 
-    def get_create_reply_response(self, reply_dto: CommentIdDTO):
-        return {"reply_id": reply_dto.comment_id}
+    def get_create_reply_response(self, reply_id: int):
+        return {"reply_id": reply_id}
 
-    def get_react_to_post_response(self, reaction_dto: ReactionIdDTO):
-        return {"reactionid": reaction_dto.reaction_id}
+    def get_add_post_reaction_response(self, reaction_id: int):
+        return {"reactionid": reaction_id}
 
-    def get_react_to_comment_response(self, reaction_dto: ReactionIdDTO):
-        return {"reactionid": reaction_dto.reaction_id}
+    def get_add_comment_reaction_response(self, reaction_id: int):
+        return {"reactionid": reaction_id}
 
-    def get_comment_replies_response(self, replies_dto: List[RepliesDTO]):
+    def get_comment_replies_response(self, replies_dto: List[ReplyDTO]):
         replies = []
         for reply_dto in replies_dto:
-            reply = {"comment_id": reply_dto.comment_id, "commenter": {"user_id": reply_dto.user.user_id,
-                                                                       "username": reply_dto.user.username,
-                                                                       "profile_pic": reply_dto.user.profile_pic},
-                     "comment_create_date": reply_dto.comment_create_date.strftime("%Y-%m-%d %H:%M:%S"), "comment_message": reply_dto.comment_content}
+            reply = {"comment_id": reply_dto.comment_id,
+                     "commenter": self.get_user_dict(reply_dto.user),
+                     "comment_create_date": reply_dto.comment_create_date.strftime(
+                         "%Y-%m-%d %H:%M:%S"),
+                     "comment_message": reply_dto.comment_content}
             replies.append(reply)
+
         return {"replies": replies}
 
-    def get_user_posts_response(self, posts_dto: UserPosts):
-        user_posts = [self.get_post_response(get_post_dto) for get_post_dto in posts_dto.posts]
+    def get_user_posts_response(self, posts_dto: UserPostsDTO):
+        user_posts = [self.get_post_response(get_post_dto)
+                      for get_post_dto in posts_dto.posts]
+
         return {"posts": user_posts}
 
-    def get_reactions_to_post_response(self, reactions_dto: List[ReactionDetailsDTO]):
+    def get_post_reactions_response(self, reactions_dto: List[UserReactionDTO]):
         reactions = []
         for reaction_dto in reactions_dto:
-            reaction = {"userid": reaction_dto.user_id, "username": reaction_dto.username,
-                        "profile_pic": reaction_dto.profile_pic, "reaction": reaction_dto.reaction}
+            reaction = self.get_user_dict(reaction_dto)
+            reaction["reaction"] = reaction_dto.reaction
             reactions.append(reaction)
 
         return {"reactions": reactions}
 
-    def get_posts_reacted_by_user_response(self, posts_dto: List[PostIdDTO]):
+    def get_user_reacted_posts_response(self, post_ids: List[int]):
         posts = []
-        for post_dto in posts_dto:
-            post = {"postid": post_dto.post_id}
+        for post_id in post_ids:
+            post = {"postid": post_id}
             posts.append(post)
 
         return {"posts": posts}
 
-    def get_posts_with_more_positive_reactions_response(self, posts_dto: List[PostIdDTO]):
+    def get_positive_reaction_posts_response(self, post_ids: List[int]):
         posts = []
-        for post_dto in posts_dto:
-            post = {"postid": post_dto.post_id}
+        for post_id in post_ids:
+            post = {"postid": post_id}
             posts.append(post)
 
         return {"posts": posts}
 
-    def get_reaction_metrics_response(self, reactions_dto: List[ReactionCountDTO]):
+    def get_reaction_metrics_response(self,
+                                      reactions_dto: List[ReactionCountDTO]):
         reactions = []
         for reaction_dto in reactions_dto:
-            reaction_metric = {"count": reaction_dto.count, "reaction": reaction_dto.reaction}
+            reaction_metric = {"count": reaction_dto.count,
+                               "reaction": reaction_dto.reaction}
             reactions.append(reaction_metric)
 
         return {"reactions": reactions}
 
-    def get_total_reaction_count_response(self, count_dto: TotalReactionDTO):
+    def get_total_reaction_count_response(self,
+                                          count_dto: TotalReactionCountDTO):
+
         return {"total_count": count_dto.count}
 
-    def get_delete_post_response(self, post_id: PostIdDTO):
-        return {"post_id": post_id.post_id}
+    def get_delete_post_response(self, post_id: Optional[int]):
+        return {"post_id": post_id}
 
     def post_not_exists(self):
         from django_swagger_utils.drf_server.exceptions import BadRequest

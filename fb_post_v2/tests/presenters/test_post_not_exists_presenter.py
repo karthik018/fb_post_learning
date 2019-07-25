@@ -1,4 +1,3 @@
-from fb_post_v2.interactors.storages.post_storage import PostIdDTO
 from fb_post_v2.presenters.presenter import JsonPresenter
 import pytest
 
@@ -17,11 +16,11 @@ class TestDeletePost:
     def test_delete_post(self):
         presenter = JsonPresenter()
 
-        post_id_dto = PostIdDTO(post_id=None)
+        post_id =None
 
-        response = presenter.get_delete_post_response(post_id_dto)
+        response = presenter.get_delete_post_response(post_id)
 
-        assert response["post_id"] == post_id_dto.post_id
+        assert response["post_id"] == post_id
 
 
 
