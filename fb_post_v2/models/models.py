@@ -54,3 +54,6 @@ class CommentReaction(models.Model):
 
     def __str__(self):
         return self.reaction
+
+class Person(models.Model):
+    username = models.CharField(max_length=20)
