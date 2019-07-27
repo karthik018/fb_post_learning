@@ -1,3 +1,4 @@
+import uuid as uuid
 from django.db import models
 from fb_post.reactions import Reaction
 from django.utils import timezone as t
@@ -54,3 +55,6 @@ class CommentReaction(models.Model):
 
     def __str__(self):
         return self.reaction
+
+class Person(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4(), unique=True)

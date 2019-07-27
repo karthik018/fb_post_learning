@@ -43,7 +43,7 @@ def get_post(post_id):
     post = Post.objects.select_related('user').get(id=post_id)
     posted_by = get_user_data(post)
     posted_at = post.post_create_date.strftime("%Y-%m-%d %H:%M:%S")
-    post_content = post.post_description
+    post_content = post.post_content
     post_reactions = PostReaction.objects.filter(post_id=post_id).values('reaction')
     reactions = []
     for reaction in post_reactions:
@@ -124,7 +124,7 @@ def get_post(post_id):
 
 def create_post(user_id, post_content):
     print(user_id, post_content)
-    post = Post(user_id=user_id, post_description=post_content, post_create_date=t.now())
+    post = Post(user_id=user_id, post_content=post_content, post_create_date=t.now())
     post.save()
     return post.id
 

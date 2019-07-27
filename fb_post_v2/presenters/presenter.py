@@ -1,5 +1,7 @@
 from typing import List, Optional
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from fb_post_v2.interactors.presenters.json_presenter import JsonPresenter
 from fb_post_v2.interactors.storages.post_storage import TotalReactionCountDTO, \
     ReactionCountDTO, UserReactionDTO, ReplyDTO, GetPostDTO, UserDTO, \
@@ -196,8 +198,9 @@ class Presenter(JsonPresenter):
         return {"post_id": post_id}
 
     def post_not_exists(self):
-        from django_swagger_utils.drf_server.exceptions import BadRequest
-        raise BadRequest('Invalid post id', 'INVALID_POST_ID')
+        # from django_swagger_utils.drf_server.exceptions import BadRequest
+        # raise BadRequest('Invalid post id', 'INVALID_POST_ID')
+        raise ObjectDoesNotExist
 
     def raise_not_comment(self):
         from django_swagger_utils.drf_server.exceptions import BadRequest

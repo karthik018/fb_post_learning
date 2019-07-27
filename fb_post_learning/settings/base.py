@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development conf - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -55,7 +57,7 @@ CORS_ALLOW_HEADERS = (
     'x-api-key',
     'x-source'
 )
-#*************** Internationalization *******************#
+# *************** Internationalization *******************#
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -67,7 +69,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 RAVEN_CONFIG = {
     'dsn': os.environ.get("RAVEN_DSN"),
@@ -156,7 +158,8 @@ LOGGING = {
             '()': LogCustomFormatter,
         },
         'console': {
-            'format': "[%(request_id)s] [fb_post_learning - "+os.environ.get("STAGE", "local")+
+            'format': "[%(request_id)s] [fb_post_learning - " + os.environ.get(
+                "STAGE", "local") +
                       '] %(levelname)-8s [%(asctime)s]  '
                       '[%(pathname)s] [%(filename)s]'
                       '[%(funcName)s] [%(lineno)d]: %(message)s',
@@ -165,12 +168,12 @@ LOGGING = {
     },
     'loggers': {
         '': {
-            'handlers': [ 'sentry', 'logentries'],
+            'handlers': ['sentry', 'logentries'],
             'level': 'INFO',
             'propagate': False,
         },
         'dsu.error': {
-            'handlers': [ 'sentry', 'logentries'],
+            'handlers': ['sentry', 'logentries'],
             'level': 'ERROR',
             'propagate': False,
         },
@@ -203,7 +206,8 @@ INSTALLED_APPS = [
     'django.contrib.auth',  # django authentication
     'django.contrib.contenttypes',  # response content types used in admin
     'django.contrib.sessions',  # django sessions used in admin
-    'django.contrib.messages',  # info, success, error message in response. admin requires this
+    'django.contrib.messages',
+    # info, success, error message in response. admin requires this
     'django.contrib.staticfiles',  # host the static files
 ]
 
@@ -293,30 +297,35 @@ TEMPLATES = [
     },
 ]
 
-
 # *********************** Middleware *************************#
 
 MIDDLEWARE = [
     'log_request_id.middleware.RequestIDMiddleware',  # request logging
     'django_swagger_utils.middlewares.reset_dsu_data_middleware.ResetDSUDataMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',  # django sessions, usefull in admin
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    # django sessions, usefull in admin
     'corsheaders.middleware.CorsMiddleware',  # cors headers middleware
     'django.middleware.common.CommonMiddleware',
     # handling the url redirect, adding / in the end of url.
     # ref https://docs.djangoproject.com/en/1.9/ref/middleware/#django.middleware.common.CommonMiddleware
-    'django.contrib.auth.middleware.AuthenticationMiddleware',  # set request.user value after authenticating
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # set request.user value after authenticating
     'django.contrib.messages.middleware.MessageMiddleware',
     # messaging framework middleware, django admin requires this
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # save from clickjack attack ref https://docs.djangoproject.com/en/1.9/ref/clickjacking/
     'django.middleware.locale.LocaleMiddleware',
+    'fb_post_v2.middlewares.exception_middleware.ExceptionMiddleware',
+    'fb_post_v2.middlewares.another_middleware.AnotherMiddleware',
 ]
 
 ### api log config
 
-MIDDLEWARE.insert(0, 'ib_common.logger.log_filters_middleware.LogFiltersMiddleware')
+MIDDLEWARE.insert(0,
+                  'ib_common.logger.log_filters_middleware.LogFiltersMiddleware')
 
 from django.utils.translation import ugettext_lazy as _
+
 LANGUAGES = (
     ('en', _('English')),
     ('te', _('Telugu')),
@@ -330,7 +339,8 @@ LOCALE_PATHS = (
 OTP_LIMIT = int(os.environ.get('OTP_LIMIT', 4))
 SMSCOUNTRY_USERNAME = os.environ.get('SMSCOUNTRY_USERNAME', '')
 SMSCOUNTRY_PASSWORD = os.environ.get('SMSCOUNTRY_PASSWORD', '')
-SMSCOUNTRY_DEFAULT_SENDER_ID = os.environ.get('SMSCOUNTRY_DEFAULT_SENDER_ID', 'IBHUBS')
+SMSCOUNTRY_DEFAULT_SENDER_ID = os.environ.get('SMSCOUNTRY_DEFAULT_SENDER_ID',
+                                              'IBHUBS')
 
 # sms & email
 import base64
@@ -339,7 +349,8 @@ EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_HOST = str(os.environ.get("EMAIL_HOST", ""))
 EMAIL_PORT = str(os.environ.get("EMAIL_PORT", ""))
 EMAIL_HOST_USER = str(os.environ.get("EMAIL_HOST_USER", ""))
-EMAIL_HOST_PASSWORD = base64.b64decode(os.environ.get("EMAIL_HOST_PASSWORD", ""))
+EMAIL_HOST_PASSWORD = base64.b64decode(
+    os.environ.get("EMAIL_HOST_PASSWORD", ""))
 EMAIL_USE_TLS = str(os.environ.get("EMAIL_USE_TLS", ""))
 DEFAULT_SENDER_EMAIL = str(os.environ.get("DEFAULT_SENDER_EMAIL", ""))
 

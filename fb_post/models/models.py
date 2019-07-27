@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from fb_post.reactions import Reaction
 from django.utils import timezone as t
@@ -6,18 +8,19 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     profile_pic = models.CharField(max_length=100)
+    mobile_number = models.TextField(max_length=10, blank=True, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.username
 
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_description = models.CharField(max_length=300)
+    post_content = models.CharField(max_length=300)
     post_create_date = models.DateTimeField(auto_now=t.now())
 
     def __str__(self):
-        return self.post_description
+        return self.post_content
 
 
 class PostReaction(models.Model):
@@ -35,7 +38,8 @@ class PostReaction(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    commented_on_id = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
+    commented_on = models.ForeignKey('self', blank=True, null=True,
+                                     on_delete=models.CASCADE)
     comment_create_date = models.DateTimeField(auto_now=t.now())
     message = models.CharField(max_length=300)
 
@@ -53,3 +57,9 @@ class CommentReaction(models.Model):
 
     def __str__(self):
         return self.reaction
+
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=10)
+    last_name = models.CharField(max_length=10)
+    person_id = models.UUIDField(unique=True, default=uuid.uuid4())

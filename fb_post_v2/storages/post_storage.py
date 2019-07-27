@@ -2,6 +2,7 @@ from typing import Optional, List, Dict
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count, Q, F
+from django.utils import timezone as tz
 
 from fb_post_v2.interactors.storages.post_storage import GetPostDTO, \
     CommentDTO, UserReactionDTO, TotalReactionCountDTO, ReactionDTO, \
@@ -60,7 +61,7 @@ class Storage(PostStorage):
                 id=comment.id, user_id=comment.user_id,
                 commented_on_id=comment.commented_on_id,
                 comment_content=comment.message,
-                comment_create_date=comment.comment_create_date)
+                comment_create_date=tz.localtime(comment.comment_create_date))
 
             comments_list.append(comment_dto)
 
@@ -89,7 +90,7 @@ class Storage(PostStorage):
         post = Post.objects.get(id=post_id)
         post_dto = PostDTO(id=post.id, user_id=post.user_id,
                            post_content=post.post_description,
-                           post_create_date=post.post_create_date)
+                           post_create_date=tz.localtime(post.post_create_date))
 
         post_reactions = PostReaction.objects.filter(post_id=post_id) \
             .values_list('reaction', flat=True)
@@ -179,7 +180,8 @@ class Storage(PostStorage):
 
             replies_dto = ReplyDTO(comment_id=reply.id, user=userdto,
                                    comment_content=reply.message,
-                                   comment_create_date=reply.comment_create_date
+                                   comment_create_date=tz.localtime(
+                                       reply.comment_create_date)
                                    )
 
             replies_list.append(replies_dto)
