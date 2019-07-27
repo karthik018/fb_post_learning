@@ -57,4 +57,8 @@ class CommentReaction(models.Model):
         return self.reaction
 
 class Person(models.Model):
+<<<<<<< HEAD
     uuid = models.UUIDField(default=uuid.uuid4(), unique=True)
+=======
+    username = models.CharField(max_length=20)
+>>>>>>> new-branch
